@@ -1,0 +1,27 @@
+# Zmienne środowiskowe — do repozytorium trafia wyłącznie .env.example.
+.env*
+!.env.example
+
+# Zależności i artefakty frameworka
+node_modules/
+.next/
+out/
+coverage/
+
+# Pliki generowane lokalnie
+*.log
+*.sqlite
+*.sqlite3
+*.db
+*.pem
+*.key
+
+# Systemy operacyjne i edytory
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Pliki użytkownika Local Vault — nigdy nie wersjonujemy danych ani dokumentów CV.
+local-vault-data/
+uploads/
