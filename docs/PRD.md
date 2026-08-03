@@ -1,9 +1,9 @@
 # PRD — Jobilot AI
 
-**Wersja:** 0.1
-**Data:** 2 sierpnia 2026
+**Wersja:** 0.2
+**Data:** 3 sierpnia 2026
 **Termin MVP:** 8 sierpnia 2026
-**Status:** zatwierdzone założenia robocze
+**Status:** MVP w realizacji
 
 ## 1. Cel i miara sukcesu
 
@@ -60,7 +60,7 @@ MVP uznajemy za gotowe, gdy użytkownik potrafi w wybranym trybie utworzyć ofer
 | FR-01 | Cloud i Local Vault są odrębnymi aplikacjami uruchamianymi niezależnie; żadna z nich nie pokazuje ekranu wyboru trybu. | Must |
 | FR-02 | Cloud Mode zapewnia rejestrację i logowanie e-mail/hasło. | Must |
 | FR-03 | Użytkownik może tworzyć CV i kolejne wersje bez nadpisywania poprzednich. | Must |
-| FR-04 | Job Offer przechowuje firmę, stanowisko, opis, wymagania, lokalizację, wynagrodzenie, link i notatki. | Must |
+| FR-04 | Job Offer przechowuje firmę, stanowisko, opis, wymagania, lokalizację, wynagrodzenie, link i notatki; użytkownik może otworzyć widok szczegółów własnej oferty. Link jest klikalny wyłącznie dla HTTP(S); inne wartości pozostają tekstem nieklikalnym. | Must |
 | FR-05 | Application jest powiązana z jedną ofertą, aktualnym statusem i snapshotem wybranego CV. | Must |
 | FR-06 | Do Application można przypisać wiele Portfolio Artifact. | Must |
 | FR-07 | Każda zmiana statusu tworzy trwały wpis historii z datą. | Must |
@@ -109,6 +109,7 @@ Snapshot CV w Application zawiera co najmniej: `cv_version_id`, nazwę pliku, nu
 ## 8. Kryteria akceptacji MVP
 
 - Dwa konta Cloud Mode nie mogą odczytać ani modyfikować wzajemnych danych.
+- Użytkownik może otworzyć szczegóły wyłącznie własnej Job Offer; bezpieczny link HTTP(S) jest klikalny, a nieobsługiwany protokół nie tworzy aktywnego odnośnika.
 - Po wybraniu wcześniejszej wersji CV dla Application późniejsze dodanie wersji nie zmienia snapshotu tej aplikacji.
 - Po zmianie statusu istnieje nowy wpis historii, a wcześniejszy wpis pozostaje widoczny.
 - Przed pierwszą operacją AI aplikacja wymaga potwierdzenia zgody i wskazuje, jakie dane zostaną wysłane.

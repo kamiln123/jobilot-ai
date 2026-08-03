@@ -50,7 +50,7 @@ Jako użytkownik chcę zachować link lub plik portfolio i przypisać go do wiel
 
 Jako użytkownik chcę ręcznie zapisać ofertę pracy, abym mógł śledzić pozycje znalezione na różnych portalach.
 
-**Akceptacja:** formularz zawiera firmę i stanowisko oraz opcjonalnie opis, wymagania, lokalizację, wynagrodzenie, link i notatki; zapis jest możliwy w obu trybach.
+**Akceptacja:** formularz zawiera firmę i stanowisko oraz opcjonalnie opis, wymagania, lokalizację, wynagrodzenie, link i notatki; zapis jest możliwy w obu trybach; użytkownik może otworzyć szczegóły własnej oferty. Link HTTP(S) jest klikalny, a nieobsługiwany lub niekompletny adres pozostaje bezpiecznym tekstem nieklikalnym.
 
 ### US-08 — utworzenie Application
 
