@@ -42,3 +42,23 @@
 | DATA-01E | LOCAL | PASS | Jednocześnie pokazano blokujący błąd wynagrodzenia oraz nieblokującą wskazówkę linku w kolejności formularza. |
 | DATA-01F | LOCAL | PASS | Odświeżenie wyczyściło niezapisane dane formularza zgodnie z decyzją produktową: w MVP nie zapisujemy automatycznie szkicu. |
 | DATA-02 | LOCAL | PASS | Kliknięcie zapisanej oferty otworzyło poprawny ekran szczegółów z firmą, stanowiskiem i zapisanymi atrybutami. |
+
+## 5 sierpnia 2026 — Sprint 2: CV Library i Portfolio (gotowe do testów ręcznych)
+
+| ID | Środowisko | Status | Wynik |
+| --- | --- | --- | --- |
+| BUILD-04 | LOCAL | PASS | `npm run lint` oraz produkcyjny `npm run build` zakończone pomyślnie; sprawdzone trasy CV Library i Portfolio. |
+| BUILD-05 | LOCAL | PASS | Po usprawnieniu biblioteki CV lint i pełny produkcyjny build ponownie zakończone pomyślnie. |
+| BUILD-06 | LOCAL | PASS | Po korekcie CTA CV i obszaru kliknięcia portfolio lint oraz produkcyjny build zakończone pomyślnie. |
+| BUILD-07 | LOCAL | PASS | Po dodaniu wyraźnego przycisku wyboru PDF lint oraz produkcyjny build zakończone pomyślnie. |
+| SMOKE-01 | LOCAL | PASS | Lokalny serwer zwrócił HTTP 200 dla `/`, `/cv-library`, `/cv-library/new` i `/portfolio`. |
+| CV-01 | LOCAL | PASS | Pusta biblioteka CV otwiera się prawidłowo. Następnie poprawiono interfejs, aby nie dublował przycisków dodawania. |
+| CV-02 | LOCAL | PASS | Testowy plik PDF został dodany jako pierwsza wersja CV. |
+| CV-03 | LOCAL | PASS | Dodanie kolejnej wersji utworzyło niezależne wpisy `v1` i `v2`. |
+| CV-04 | LOCAL | PASS | Brak pliku, plik inny niż PDF oraz plik 20 MB zostały zablokowane poprawnymi komunikatami po polsku. |
+| CV-05 | LOCAL | PASS | Wybór istniejącego CV pokazał opis; jego zmiana i zapis nowej wersji działają poprawnie. |
+| CV-06 | LOCAL | PASS | Pusty stan nie zawiera dwóch przycisków dodawania. Następnie CTA zostało dodatkowo powiększone i umieszczone pod opisem biblioteki. |
+| CV-07 | LOCAL | PASS | Wyraźny przycisk `Wybierz plik PDF` jest czytelny. Ręczny retest potwierdził również dalsze blokowanie pliku innego niż PDF i pliku większego niż 5 MB. |
+| PORT-01 | LOCAL | PASS | Poprawny link HTTP(S) można zapisać; można dodać kilka elementów portfolio, a tekst adresu otwiera stronę zewnętrzną. |
+| PORT-02 | LOCAL | PASS | Niepełny adres `asd.pl` został zablokowany komunikatem o wymaganym `https://` lub `http://`. |
+| PORT-03 | LOCAL | PASS | Po poprawce adres otwiera się wyłącznie po kliknięciu tekstu linku; pozostała część kafelka nie jest klikalna. |

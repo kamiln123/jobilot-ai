@@ -6,11 +6,11 @@
 
 ## Plan MVP: 2–8 sierpnia 2026
 
-| Termin | Sprint | Rezultat demonstracyjny | Priorytet | Status 3 sierpnia |
+| Termin | Sprint | Rezultat demonstracyjny | Priorytet | Status 5 sierpnia |
 | --- | --- | --- | --- | --- |
 | 2 sierpnia | 0. Fundament produktu | Dokumentacja, repozytorium, konfiguracja bez sekretów, model danych i decyzje architektoniczne. | Must | Ukończony |
 | 3 sierpnia | 1. Szkielet i dostęp | Monorepo, Next.js Cloud, Tauri Local Vault, Cloud Auth oraz zabezpieczone schematy/RLS. | Must | Ukończony; testy Auth PASS |
-| 4 sierpnia | 2. Dane rekrutacyjne | CV Library z wersjami, Job Offer i Portfolio Artifact. | Must | W toku: Job Offer z listą, walidacją i szczegółami ukończony; CV i Portfolio przed nami |
+| 4 sierpnia | 2. Dane rekrutacyjne | CV Library z wersjami, Job Offer i Portfolio Artifact. | Must | Ukończony; Job Offer, CV PDF do 5 MB z wersjami i Portfolio przetestowane ręcznie |
 | 5 sierpnia | 3. Application first | Tworzenie Application, snapshot CV, statusy, historia i notatki. | Must | Zaplanowany |
 | 6 sierpnia | 4. Local Vault | SQLite, lokalne ścieżki CRUD, brak usług zewnętrznych, eksport JSON oraz build Windows. | Must | Zaplanowany |
 | 7 sierpnia | 5. AI bezpiecznie | Zgoda AI, AI Gateway, limity, analiza CV/oferty i Cover Letter. | Must | Zaplanowany |
@@ -39,6 +39,7 @@ Jeżeli termin jest zagrożony, nie usuwamy bezpieczeństwa, RLS, Local Vault, h
 - Szyfrowane kopie Local Vault oraz import/eksport.
 - Dopracowany mechanizm cache, circuit breaker i monitoring kosztów AI.
 - Motyw jasny, ciemny i zgodny z ustawieniem systemu wraz z zapamiętaniem preferencji użytkownika.
+- Obsługa CV w formacie Word (`.docx`) po analizie bezpieczeństwa plików; MVP pozostaje przy PDF do 5 MB.
 
 ### Wersja 2.0
 

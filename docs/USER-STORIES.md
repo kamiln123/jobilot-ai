@@ -103,3 +103,11 @@ Jako właściciel produktu chcę limitować operacje AI na użytkownika, abym og
 Jako użytkownik Local Vault chcę wyeksportować swoje dane do pliku JSON, abym zachował nad nimi kontrolę.
 
 **Akceptacja:** eksport zawiera dane użytkownika z lokalnego sejfu bez sekretów; nie wysyła danych do serwera; użytkownik świadomie pobiera plik.
+
+## Po MVP
+
+### US-16 — CV w formacie Word
+
+Jako użytkownik chcę wgrać CV w formacie Word (`.docx`), abym nie musiał przed zapisem ręcznie konwertować go do PDF.
+
+**Akceptacja:** funkcja jest dostępna po MVP; plik `.docx` przechodzi walidację rozszerzenia, MIME i rozmiaru; tworzy niezmienną wersję CV tak jak PDF; plik nie jest automatycznie wysyłany do AI.

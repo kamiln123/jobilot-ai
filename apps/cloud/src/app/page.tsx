@@ -112,7 +112,8 @@ export default function Home() {
             <a className="flex items-center gap-3 rounded-xl bg-[#e7efe5] px-3 py-2.5 text-sm font-medium text-[#26432c]" href="#pulpit">Pulpit</a>
             <span className="block rounded-xl px-3 py-2.5 text-sm text-[#98a098]">Aplikacje — w przygotowaniu</span>
             <Link className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#687167] hover:bg-[#f0f2ec] hover:text-[#263b2c]" href="/job-offers">Oferty pracy</Link>
-            <span className="block rounded-xl px-3 py-2.5 text-sm text-[#98a098]">Biblioteka CV — w przygotowaniu</span>
+            <Link className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#687167] hover:bg-[#f0f2ec] hover:text-[#263b2c]" href="/cv-library">Biblioteka CV</Link>
+            <Link className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#687167] hover:bg-[#f0f2ec] hover:text-[#263b2c]" href="/portfolio">Portfolio</Link>
           </nav>
           <div className="mt-auto rounded-2xl bg-[#263b2c] p-4 text-[#f8fbf6]">
             <p className="text-xs font-medium text-[#c7d8c5]">Cloud Mode</p>

@@ -49,7 +49,16 @@
 | DATA-01E | Kolejność walidacji | przy kilku błędach użytkownik widzi wszystkie błędy pod polami w kolejności formularza |
 | DATA-01F | Odświeżenie formularza | zachowanie niezapisanego formularza jest zgodne z podjętą decyzją produktową: reset albo lokalny szkic |
 | DATA-02 | Szczegóły Job Offer | kliknięcie własnej oferty otwiera wszystkie zapisane dane; nieobsługiwany link nie jest klikalny |
-| DATA-02 | Dodanie CV i kolejnej wersji | kolejne numery wersji, brak nadpisania |
+| CV-01 | Pusta biblioteka CV | jasny stan pusty i możliwość dodania pierwszego CV |
+| CV-02 | Dodanie CV PDF | plik PDF do 5 MB trafia do prywatnego storage i pojawia się jako wersja `v1` |
+| CV-03 | Dodanie kolejnej wersji CV | kolejne numery wersji, brak nadpisania pierwszego pliku i metadanych |
+| CV-04 | Walidacja pliku CV | plik inny niż PDF albo większy niż 5 MB nie jest wysyłany |
+| CV-05 | Opis przy nowej wersji | wybór istniejącego dokumentu pokazuje jego opis; użytkownik może go zmienić, a po zapisie widzi nową wartość w bibliotece |
+| CV-06 | Główny przycisk CV | w stanie pustym jest jeden, stale widoczny przycisk `Dodaj CV`; nie ma zduplikowanych CTA |
+| CV-07 | Wybór fizycznego pliku CV | formularz ma wyraźny przycisk `Wybierz plik PDF`; po wyborze pokazuje nazwę pliku |
+| PORT-01 | Dodanie elementu portfolio | link HTTP(S), typ i opcjonalny opis zapisują się oraz są widoczne tylko dla właściciela |
+| PORT-02 | Walidacja linku portfolio | pusty, niepełny lub inny niż HTTP(S) adres nie jest zapisywany |
+| PORT-03 | Zakres kliknięcia portfolio | tylko tekst bezpiecznego adresu jest klikalny; kliknięcie pozostałej części kafelka nie otwiera strony zewnętrznej |
 | DATA-03 | Utworzenie Application | zapis Job Offer, CV snapshotu i statusu początkowego |
 | DATA-04 | Zmiana statusu Application | nowy wpis historii, brak nadpisania historii |
 

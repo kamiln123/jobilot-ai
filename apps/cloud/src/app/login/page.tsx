@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -12,6 +12,14 @@ import {
 type FormMode = "sign-in" | "sign-up";
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-[#f7f7f4] p-8 text-[#20241f]"><p>Ładowanie...</p></main>}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [mode, setMode] = useState<FormMode>("sign-in");
