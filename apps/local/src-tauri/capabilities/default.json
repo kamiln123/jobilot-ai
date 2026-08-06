@@ -5,6 +5,14 @@
   "windows": ["main"],
   "permissions": [
     "core:default",
-    "opener:default"
+    "sql:default",
+    "sql:allow-execute",
+    "fs:default",
+    "fs:allow-write-file",
+    "fs:allow-remove",
+    {
+      "identifier": "fs:scope",
+      "allow": ["$APPLOCALDATA/cv-files", "$APPLOCALDATA/cv-files/**/*"]
+    }
   ]
 }

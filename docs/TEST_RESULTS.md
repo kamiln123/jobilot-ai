@@ -85,3 +85,24 @@
 | DATA-04 | LOCAL | PASS | Status zmieniono na `applied` („Wysłana”). Pojawiła się data wysłania i nowy wpis historii; po odświeżeniu i powrocie do listy dane pozostały widoczne. |
 | DATA-05 | LOCAL | PASS | Prywatna notatka Application zapisała się prawidłowo i pozostała widoczna po odświeżeniu. |
 | DATA-06 | LOCAL | PASS | Ponowna próba utworzenia aktywnej Application dla tej samej oferty została zablokowana komunikatem: „Masz już aktywną aplikację do tej oferty.” |
+
+## 6 sierpnia 2026 — Sprint 4: Local Vault (pierwszy test)
+
+| ID | Środowisko | Status | Wynik |
+| --- | --- | --- | --- |
+| BUILD-11 | LOCAL VAULT | PASS | `npm run build` dla interfejsu Vite oraz `cargo check` dla Tauri z SQLite i lokalnym systemem plików zakończone pomyślnie. |
+| LOCAL-01 | LOCAL VAULT | PASS | Natywna aplikacja `appslocal.exe` uruchamia się bez logowania Cloud i bez wyboru trybu. Interfejs jasno oznacza „Local Vault”. |
+| LOCAL-04 | LOCAL VAULT | PASS | Pierwsze uruchomienie otworzyło lokalną bazę SQLite; testowa oferta została zapisana i pojawiła się na lokalnej liście. |
+| LOCAL-05A | LOCAL VAULT | PASS | Lokalny formularz Job Offer obsługuje opis, wymagania, lokalizację, tryb pracy, zatrudnienie, wynagrodzenie, link i notatkę. Wynagrodzenie `do` niższe niż `od` blokuje zapis; równe wartości są dozwolone. |
+| LOCAL-05B | LOCAL VAULT | PASS | Link bez `https://` oraz adres ze spacją wyświetlają nieblokujące wskazówki. Poprawna oferta zapisuje się lokalnie. |
+| LOCAL-05C | LOCAL VAULT | PASS | Retest prawidłowego PDF zakończony powodzeniem: plik został skopiowany do prywatnego katalogu Local Vault, rekord CV pojawił się na liście. Przyczyną poprzedniej awarii była ręczna transakcja `BEGIN … COMMIT` uruchamiana przez wiele wywołań wtyczki SQLite; zastąpiono ją zapisem sekwencyjnym z kompensacją częściowego zapisu. |
+| LOCAL-05D | LOCAL VAULT | PASS | Plik 20 MB został zablokowany komunikatem o limicie 5 MB; plik `.msi` został odrzucony jako nieprawidłowy PDF; pusta nazwa CV zablokowała zapis przez walidację pola wymaganej nazwy. Drugi prawidłowy PDF został zapisany z komunikatem sukcesu i pojawił się na liście. |
+| LOCAL-05E | LOCAL VAULT | PASS | Po zamknięciu i ręcznym ponownym uruchomieniu Local Vault oba zapisane CV pozostały widoczne w bibliotece. Potwierdza to trwałość rekordów SQLite i lokalnego magazynu plików. |
+| LOCAL-05F | LOCAL VAULT | PASS | Otwieranie szczegółów Job Offer, edycja danych, walidacja błędnego wynagrodzenia oraz trwałość poprawionej oferty po restarcie zostały potwierdzone ręcznie. Powrót z edycji bez zapisu nie zapisuje zmian. |
+| LOCAL-05G | LOCAL VAULT | PASS | Ręczna zmiana waluty została zapisana, widoczna w szczegółach Job Offer, odzwierciedlona w statystykach pulpitu oraz zachowana po restarcie Local Vault. |
+| LOCAL-05H | LOCAL VAULT | PASS | CV są grupowane według dokumentu. Dodanie kolejnej wersji z opisem utworzyło `v2` bez nadpisania `v1`; walidacja limitu 5 MB zadziałała, a opis oraz obie wersje pozostały po restarcie aplikacji. |
+| LOCAL-05I | LOCAL VAULT | PASS | Nowe Portfolio z typem `github`, poprawnym linkiem i opisem zapisało się lokalnie; niepełny link został zablokowany poprawnym komunikatem. Element był dostępny w formularzu Application, zwiększył statystyki pulpitu i pozostał po restarcie. |
+| LOCAL-05J | LOCAL VAULT | PASS | Portfolio otwiera szczegóły i edycję; zapisano zmieniony opis, potwierdzono komunikat sukcesu, widoczność danych w Application oraz trwałość po restarcie. |
+| LOCAL-05K | LOCAL VAULT | PASS | Utworzono Application z lokalną ofertą, CV `v2` i portfolio. Zmiana na status „Wysłana” dodała historię i datę wysłania; notatka, dane i licznik pulpitu pozostały po restarcie. Druga aktywna Application dla tej samej oferty została zablokowana; ponowny wybór tej samej wersji CV jest dozwolony. |
+| LOCAL-06 | LOCAL VAULT | PASS | Eksport JSON został przygotowany lokalnie w folderze Pobrane. Zawiera dane ofert, dokumentów CV, osobnej tabeli wersji CV, portfolio i Application; nie zawiera binarnej treści PDF ani pełnej ścieżki systemowej użytkownika. |
+| LOCAL-05L | LOCAL VAULT | PASS | Portfolio można odpiąć i ponownie przypiąć do istniejącej Application bez tworzenia duplikatu. Komunikat sukcesu i trwałość relacji po restarcie zostały potwierdzone ręcznie. |

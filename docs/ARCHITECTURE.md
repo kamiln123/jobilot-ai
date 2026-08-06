@@ -20,6 +20,15 @@ GitHub
 
 Kod może współdzielić modele domenowe, schematy walidacji i komponenty prezentacyjne przez katalog `packages/`. Nie współdzielimy klientów Supabase, kodu AI, zmiennych środowiskowych ani magazynów danych.
 
+## Granice domen i odporność na zmiany
+
+- `Job Offer`, `CV Library`, `Portfolio` i `Application` są osobnymi domenami. Każda ma własny model, walidację i operacje zapisu.
+- `Application` przechowuje wyłącznie identyfikatory powiązań oraz snapshot wymaganych metadanych. Nie zastępuje identyfikatora Application identyfikatorem oferty ani dokumentu.
+- Zmiana schematu danych wymaga idempotentnej migracji, testu istniejących danych i testu relacji z Application.
+- Domena nie pobiera bezpośrednio danych z innej domeny przez komponent interfejsu. W Cloud korzysta z adaptera Supabase, a w Local Vault z adaptera SQLite.
+- Każdy sprint obejmujący domenę zawiera: test jej CRUD, test relacji Application, test odświeżenia danych oraz test regresji wcześniej ukończonych domen.
+- Cloud i Local Vault nie dzielą klienta danych ani konfiguracji. Jedynym dopuszczalnym wspólnym elementem w przyszłości są czyste typy i walidatory bez zależności od infrastruktury.
+
 ## Jobilot AI Cloud
 
 - Aplikacja Next.js dostępna przez HTTPS, wdrażana z GitHuba na Vercel.

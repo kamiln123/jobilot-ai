@@ -72,6 +72,16 @@
 | LOCAL-01 | Uruchomienie Local Vault | brak rejestracji i logowania Cloud |
 | LOCAL-02 | Zapis danych i restart aplikacji | dane pozostają lokalnie po restarcie |
 | LOCAL-03 | Kontrola sieci | brak żądań do Supabase i dostawców AI |
+| LOCAL-04 | Inicjalizacja SQLite | pierwsze uruchomienie tworzy lokalną bazę i tabele bez konta, kluczy oraz połączenia z Cloud |
+| LOCAL-05 | Niezależność domen | lokalne CRUD ofert, CV, portfolio i Application działają przez SQLite; Application zachowuje własne ID, historię i blokadę duplikatu |
+| LOCAL-05F | Szczegóły i edycja Job Offer | kliknięcie lokalnej oferty pokazuje wszystkie zapisane pola; edycja zachowuje ID oferty, a link pozostaje tekstem bez automatycznego otwierania połączenia zewnętrznego |
+| LOCAL-05H | Opis i wersjonowanie CV | nowy dokument CV może mieć opis; wybór istniejącego dokumentu dodaje następną wersję, nie nadpisuje poprzedniej i zachowuje dane po restarcie |
+| LOCAL-05I | Dane Portfolio | zapis Portfolio obejmuje tytuł, typ, opcjonalny link i opis; wcześniejsze rekordy otrzymują typ `link`, a nowe pola są widoczne przy tworzeniu Application |
+| LOCAL-05J | Szczegóły i edycja Portfolio | kliknięcie elementu otwiera wszystkie jego dane; edycja zachowuje ID artefaktu i pozostaje trwała po restarcie |
+| LOCAL-05K | Application end-to-end | lokalna Application łączy ofertę, konkretną wersję CV i wybrane Portfolio; status, data wysłania, historia i notatka pozostają po restarcie, a duplikat aktywnej Application jest blokowany |
+| LOCAL-05L | Edycja portfolio Application | istniejąca Application umożliwia dodanie i usunięcie przypisanych elementów Portfolio bez tworzenia duplikatu Application; zmiana pozostaje po restarcie |
+| LOCAL-06 | Eksport danych | eksport JSON powstaje lokalnie i zawiera wyłącznie dane Local Vault |
+| LOCAL-07 | Regresja po restarcie | dane każdej domeny oraz powiązanie Application pozostają po zamknięciu i ponownym uruchomieniu aplikacji |
 | AI-01 | Pierwsze użycie AI w Cloud | wyświetlona zgoda, cel i zakres danych |
 | AI-02 | Brak zgody AI | wywołanie zablokowane |
 | AI-03 | Zapis wyniku AI | zapisany tylko świadomie wybrany wynik, nie pełen prompt ani historia |
