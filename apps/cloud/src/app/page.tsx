@@ -110,7 +110,7 @@ export default function Home() {
           </a>
           <nav aria-label="Główna nawigacja" className="space-y-1">
             <a className="flex items-center gap-3 rounded-xl bg-[#e7efe5] px-3 py-2.5 text-sm font-medium text-[#26432c]" href="#pulpit">Pulpit</a>
-            <span className="block rounded-xl px-3 py-2.5 text-sm text-[#98a098]">Aplikacje — w przygotowaniu</span>
+            <Link className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#687167] hover:bg-[#f0f2ec] hover:text-[#263b2c]" href="/applications">Aplikacje</Link>
             <Link className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#687167] hover:bg-[#f0f2ec] hover:text-[#263b2c]" href="/job-offers">Oferty pracy</Link>
             <Link className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#687167] hover:bg-[#f0f2ec] hover:text-[#263b2c]" href="/cv-library">Biblioteka CV</Link>
             <Link className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#687167] hover:bg-[#f0f2ec] hover:text-[#263b2c]" href="/portfolio">Portfolio</Link>
@@ -148,11 +148,11 @@ export default function Home() {
 
           <section className="mt-8 rounded-2xl border border-[#e5e7e0] bg-white p-6 sm:p-8">
             <p className="text-sm font-semibold text-[#456a4b]">Następny krok</p>
-            <h2 className="mt-2 text-xl font-semibold tracking-tight">Dodawanie ofert pracy</h2>
+            <h2 className="mt-2 text-xl font-semibold tracking-tight">Zarządzaj aplikacjami</h2>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6c716b]">
-              Ręczny zapis ofert jest już dostępny. Application utworzymy w kolejnym kroku — decyzja o aplikowaniu zawsze pozostaje po Twojej stronie.
+              Połącz własną ofertę, konkretną wersję CV i wybrane portfolio w jedną Application. Decyzja o aplikowaniu zawsze pozostaje po Twojej stronie.
             </p>
-            <Link className="mt-5 inline-flex rounded-xl bg-[#2d5034] px-4 py-3 text-sm font-semibold text-white hover:bg-[#203d27]" href="/job-offers">Przejdź do ofert pracy</Link>
+            <Link className="mt-5 inline-flex rounded-xl bg-[#2d5034] px-4 py-3 text-sm font-semibold text-white hover:bg-[#203d27]" href="/applications">Przejdź do aplikacji</Link>
           </section>
         </section>
       </div>

@@ -62,3 +62,26 @@
 | PORT-01 | LOCAL | PASS | Poprawny link HTTP(S) można zapisać; można dodać kilka elementów portfolio, a tekst adresu otwiera stronę zewnętrzną. |
 | PORT-02 | LOCAL | PASS | Niepełny adres `asd.pl` został zablokowany komunikatem o wymaganym `https://` lub `http://`. |
 | PORT-03 | LOCAL | PASS | Po poprawce adres otwiera się wyłącznie po kliknięciu tekstu linku; pozostała część kafelka nie jest klikalna. |
+
+## 5 sierpnia 2026 — Sprint 3: Application first
+
+| ID | Środowisko | Status | Wynik |
+| --- | --- | --- | --- |
+| BUILD-08 | LOCAL | PASS | Lint oraz produkcyjny build wygenerowały trasy `/applications`, `/applications/new` i `/applications/[id]`. |
+| DATA-03 | LOCAL | BLOCKED | Wymaga zastosowania migracji `20260805120000_create_application_with_portfolio.sql` w Supabase i utworzenia Application przez użytkownika. |
+| DATA-04 | LOCAL | BLOCKED | Wymaga ręcznej zmiany statusu utworzonej Application. |
+| DATA-05 | LOCAL | BLOCKED | Wymaga ręcznego dodania notatki do utworzonej Application. |
+| DATA-06 | LOCAL | BLOCKED | Wymaga ponownej próby utworzenia Application dla tej samej oferty. |
+
+## 6 sierpnia 2026 — Sprint 3: Application first (retest)
+
+| ID | Środowisko | Status | Wynik |
+| --- | --- | --- | --- |
+| BUILD-09 | LOCAL | PASS | `npm run lint` zakończony pomyślnie po poprawie routingu Application. |
+| BUILD-10 | LOCAL | PASS | Pełny produkcyjny `npm run build` zakończony kodem 0; wygenerowano trasy Application, CV, Job Offer i Portfolio. |
+| SMOKE-02 | LOCAL | PASS | Lokalny serwer zwrócił HTTP 200 dla `/applications`, `/applications/new` oraz dynamicznej trasy `/applications/{id}`. |
+| DATA-03 | LOCAL | PASS | Utworzenie Application i otwarcie jej szczegółów zostały potwierdzone ręcznie. Poprawka rozdzieliła `applications.id` od `job_offers.id` w linku karty. |
+| DATA-03A | LOCAL | PASS | Kliknięcie karty Application otwiera jej właściwy ekran szczegółów po poprawie nadpisywania ID przez dane Job Offer. |
+| DATA-04 | LOCAL | PASS | Status zmieniono na `applied` („Wysłana”). Pojawiła się data wysłania i nowy wpis historii; po odświeżeniu i powrocie do listy dane pozostały widoczne. |
+| DATA-05 | LOCAL | PASS | Prywatna notatka Application zapisała się prawidłowo i pozostała widoczna po odświeżeniu. |
+| DATA-06 | LOCAL | PASS | Ponowna próba utworzenia aktywnej Application dla tej samej oferty została zablokowana komunikatem: „Masz już aktywną aplikację do tej oferty.” |

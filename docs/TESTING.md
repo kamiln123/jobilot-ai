@@ -59,8 +59,11 @@
 | PORT-01 | Dodanie elementu portfolio | link HTTP(S), typ i opcjonalny opis zapisują się oraz są widoczne tylko dla właściciela |
 | PORT-02 | Walidacja linku portfolio | pusty, niepełny lub inny niż HTTP(S) adres nie jest zapisywany |
 | PORT-03 | Zakres kliknięcia portfolio | tylko tekst bezpiecznego adresu jest klikalny; kliknięcie pozostałej części kafelka nie otwiera strony zewnętrznej |
-| DATA-03 | Utworzenie Application | zapis Job Offer, CV snapshotu i statusu początkowego |
-| DATA-04 | Zmiana statusu Application | nowy wpis historii, brak nadpisania historii |
+| DATA-03 | Utworzenie Application | atomowy zapis własnej Job Offer, snapshotu CV, statusu początkowego i wybranego portfolio |
+| DATA-03A | Routing Application | kliknięcie karty prowadzi do szczegółów po `applications.id`; identyfikator Job Offer nie może zastąpić identyfikatora Application w adresie |
+| DATA-04 | Zmiana statusu Application | nowy wpis historii, brak nadpisania historii; ustawienie `applied` zapisuje datę wysłania |
+| DATA-05 | Notatki Application | prywatna notatka zapisuje się tylko we własnej Application i pozostaje widoczna po odświeżeniu |
+| DATA-06 | Duplikat Application | druga aktywna Application dla tej samej Job Offer jest zablokowana |
 
 ### Local Vault i AI
 
