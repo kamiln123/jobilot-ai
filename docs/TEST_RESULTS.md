@@ -1,5 +1,11 @@
 # Wyniki testów — Jobilot AI
 
+## Sprint 5 — AI Gateway (oczekuje na test integracyjny)
+
+- Status: PENDING.
+- Warunek rozpoczęcia: zastosowana migracja `20260807190000_add_ai_usage_functions.sql` oraz wdrożenie Cloud Mode z sekretem `GEMINI_API_KEY`.
+- Plan przypadków testowych: `docs/TESTING.md`, pozycje `AI-01` do `AI-08`.
+
 ## Konwencja
 
 - `PASS` — wynik zgodny z kryterium.

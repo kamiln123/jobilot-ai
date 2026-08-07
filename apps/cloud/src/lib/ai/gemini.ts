@@ -1,0 +1,116 @@
+export type AiOperation = "analysis" | "cover-letter";
+
+export type MatchAnalysis = {
+  score: number;
+  strengths: string[];
+  gaps: string[];
+  recommendations: string[];
+};
+
+export type GeminiUsage = { inputTokens: number; outputTokens: number };
+
+const MAX_OUTPUT_TOKENS = 1400;
+
+export async function generateWithGemini({
+  apiKey,
+  model,
+  operation,
+  cvPdfBase64,
+  companyName,
+  positionTitle,
+  jobDescription,
+  jobRequirements,
+}: {
+  apiKey: string;
+  model: string;
+  operation: AiOperation;
+  cvPdfBase64: string;
+  companyName: string;
+  positionTitle: string;
+  jobDescription: string | null;
+  jobRequirements: string | null;
+}): Promise<{ result: MatchAnalysis | { content: string }; usage: GeminiUsage }> {
+  const task = operation === "analysis"
+    ? "Porównaj CV z ofertą. Zwróć wyłącznie poprawny JSON: {\"score\": liczba 0-100, \"strengths\": [maks. 5 krótkich punktów], \"gaps\": [maks. 5 krótkich punktów], \"recommendations\": [maks. 5 konkretnych rekomendacji]}. Nie wymyślaj faktów spoza CV i oferty."
+    : "Napisz profesjonalny, konkretny list motywacyjny po polsku na podstawie CV i oferty. Nie wymyślaj doświadczenia. Zwróć wyłącznie poprawny JSON: {\"content\": \"treść listu\"}. Maksymalnie 350 słów.";
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`,
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      signal: AbortSignal.timeout(25_000),
+      body: JSON.stringify({
+        contents: [{
+          role: "user",
+          parts: [
+            { text: `${task}\n\nFirma: ${companyName}\nStanowisko: ${positionTitle}\nOpis oferty: ${jobDescription ?? "brak"}\nWymagania: ${jobRequirements ?? "brak"}` },
+            { inlineData: { mimeType: "application/pdf", data: cvPdfBase64 } },
+          ],
+        }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          maxOutputTokens: MAX_OUTPUT_TOKENS,
+          temperature: 0.25,
+        },
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(response.status === 429 ? "AI_LIMIT" : "AI_PROVIDER");
+  }
+
+  const payload = await response.json() as {
+    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+    usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number };
+  };
+  const text = payload.candidates?.[0]?.content?.parts?.map((part) => part.text ?? "").join("").trim();
+  if (!text) throw new Error("AI_RESPONSE");
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    throw new Error("AI_RESPONSE");
+  }
+
+  const usage = {
+    inputTokens: Math.max(0, payload.usageMetadata?.promptTokenCount ?? 0),
+    outputTokens: Math.max(0, payload.usageMetadata?.candidatesTokenCount ?? 0),
+  };
+
+  if (operation === "analysis") return { result: validateAnalysis(parsed), usage };
+  return { result: validateCoverLetter(parsed), usage };
+}
+
+function shortTextList(value: unknown) {
+  if (!Array.isArray(value)) throw new Error("AI_RESPONSE");
+  return value
+    .filter((item): item is string => typeof item === "string")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .slice(0, 5);
+}
+
+function validateAnalysis(value: unknown): MatchAnalysis {
+  if (!value || typeof value !== "object") throw new Error("AI_RESPONSE");
+  const data = value as Record<string, unknown>;
+  const score = typeof data.score === "number" ? Math.round(data.score) : Number.NaN;
+  if (!Number.isFinite(score)) throw new Error("AI_RESPONSE");
+  return {
+    score: Math.min(100, Math.max(0, score)),
+    strengths: shortTextList(data.strengths),
+    gaps: shortTextList(data.gaps),
+    recommendations: shortTextList(data.recommendations),
+  };
+}
+
+function validateCoverLetter(value: unknown) {
+  if (!value || typeof value !== "object") throw new Error("AI_RESPONSE");
+  const content = (value as Record<string, unknown>).content;
+  if (typeof content !== "string" || content.trim().length < 40 || content.trim().length > 20_000) {
+    throw new Error("AI_RESPONSE");
+  }
+  return { content: content.trim() };
+}

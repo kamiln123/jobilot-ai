@@ -8,6 +8,7 @@ import {
   getSupabaseBrowserClient,
   isSupabaseBrowserConfigured,
 } from "@/lib/supabase/browser-client";
+import { ApplicationAiPanel } from "@/components/application-ai-panel";
 
 type Application = {
   id: string;
@@ -17,6 +18,7 @@ type Application = {
   cv_file_name_snapshot: string;
   cv_version_snapshot: number;
   cv_checksum_snapshot: string;
+  cv_version_id: string;
   job_offer_id: string;
   jobOffer?: JobOffer;
 };
@@ -81,7 +83,7 @@ export default function ApplicationDetailsPage() {
 
     const { data: ownedApplications, error: applicationError } = await supabase
       .from("applications")
-      .select("id,status,created_at,sent_at,cv_file_name_snapshot,cv_version_snapshot,cv_checksum_snapshot,job_offer_id")
+      .select("id,status,created_at,sent_at,cv_file_name_snapshot,cv_version_snapshot,cv_checksum_snapshot,cv_version_id,job_offer_id")
       .is("deleted_at", null);
 
     if (applicationError) {
@@ -217,6 +219,8 @@ export default function ApplicationDetailsPage() {
             {portfolio.length === 0 ? <p className="text-sm text-[#687167]">Nie przypisano portfolio.</p> : null}
           </div>
         </section>
+
+        <ApplicationAiPanel applicationId={application.id} cvVersionId={application.cv_version_id} />
 
         <section className="mt-5 grid gap-5 lg:grid-cols-2">
           <article className="rounded-2xl border border-[#e5e7e0] bg-white p-6">
