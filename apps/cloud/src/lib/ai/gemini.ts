@@ -12,6 +12,25 @@ export type GeminiUsage = { inputTokens: number; outputTokens: number };
 const MAX_OUTPUT_TOKENS = 1400;
 const REQUEST_TIMEOUT_MS = 55_000;
 
+const analysisSchema = {
+  type: "object",
+  properties: {
+    score: { type: "integer", minimum: 0, maximum: 100, description: "Ocena dopasowania CV do oferty." },
+    strengths: { type: "array", items: { type: "string" }, maxItems: 5, description: "Mocne strony kandydata." },
+    gaps: { type: "array", items: { type: "string" }, maxItems: 5, description: "Braki lub ryzyka względem oferty." },
+    recommendations: { type: "array", items: { type: "string" }, maxItems: 5, description: "Konkretne rekomendacje." },
+  },
+  required: ["score", "strengths", "gaps", "recommendations"],
+};
+
+const coverLetterSchema = {
+  type: "object",
+  properties: {
+    content: { type: "string", description: "Profesjonalny list motywacyjny po polsku, maksymalnie 350 słów." },
+  },
+  required: ["content"],
+};
+
 export class GeminiProviderError extends Error {
   constructor(public readonly diagnostic: string) {
     super("AI_PROVIDER");
@@ -66,7 +85,12 @@ export async function generateWithGemini({
             ],
           }],
           generationConfig: {
-            responseMimeType: "application/json",
+            responseFormat: {
+              text: {
+                mimeType: "application/json",
+                schema: operation === "analysis" ? analysisSchema : coverLetterSchema,
+              },
+            },
             maxOutputTokens: MAX_OUTPUT_TOKENS,
             temperature: 0.25,
           },
