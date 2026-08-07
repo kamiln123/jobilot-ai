@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const installerUrl = "https://github.com/kamiln123/jobilot-ai/releases/download/local-vault-v0.1.0/Jobilot%20AI%20Local%20Vault_0.1.0_x64-setup.exe";
+const installerUrl = "https://github.com/kamiln123/jobilot-ai/releases/download/local-vault-v0.1.0/Jobilot.AI.Local.Vault_0.1.0_x64-setup.exe";
 
 export default function LocalVaultDownloadPage() {
   return (
