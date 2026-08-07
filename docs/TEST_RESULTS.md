@@ -30,6 +30,7 @@
 | --- | --- | --- | --- |
 | QA-01 | LOCAL | PASS | `npm.cmd run lint`, `npx.cmd tsc --noEmit` oraz produkcyjny `npx.cmd next build` dla `apps/cloud` zakończyły się poprawnie. Build utworzył artefakt `.next/BUILD_ID`. |
 | QA-02 | LOCAL | PASS | Kontrola śledzonych przez Git plików konfiguracji wykazała wyłącznie szablon `.env.example`; wyszukiwanie typowych wzorców kluczy Gemini, OpenAI i Supabase nie znalazło sekretów poza wartościami zastępczymi. |
+| PROD-01 | PROD | PASS | PR #2 został zmergowany do `main`; automatyczne wdrożenie Vercel Production osiągnęło status `Ready`, a żądanie `GET /login` zwróciło HTTP 200. |
 
 ## Konwencja
 

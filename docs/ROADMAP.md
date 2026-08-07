@@ -14,7 +14,7 @@
 | 5–6 sierpnia | 3. Application first | Tworzenie Application, snapshot CV, statusy, historia i notatki. | Must | Ukończony; migracja Supabase zastosowana, testy tworzenia, routingu, statusów, historii, notatek i blokady duplikatu PASS |
 | 6 sierpnia | 4. Local Vault | SQLite, lokalne ścieżki CRUD, brak usług zewnętrznych, eksport JSON oraz build Windows. | Must | Ukończony; ręczne testy ofert, CV, Portfolio, Application, relacji, eksportu i trwałości danych PASS |
 | 7 sierpnia | 5. AI bezpiecznie | Zgoda AI, AI Gateway, limity, analiza CV/oferty i Cover Letter. | Must | Ukończony; testy AI-01–AI-08 są PASS. Tymczasowy adapter: Gemini Free Tier; docelowy dostawca: OpenAI. |
-| 8 sierpnia | 6. Jakość i prezentacja | Testy krytycznych przepływów, kontrola RLS, kontrola sekretów, README, dane demo i wdrożenie. | Must | W toku — bez PR-a i bez zmiany produkcji do czasu zatwierdzenia pełnych testów. |
+| 8 sierpnia | 6. Jakość i prezentacja | Testy krytycznych przepływów, kontrola RLS, kontrola sekretów, README, dane demo i wdrożenie. | Must | W toku — PR #2 zmergowany do `main`, Vercel Production `Ready` i `/login` zwraca HTTP 200. Pozostaje ręczne potwierdzenie RLS dla drugiego konta oraz polityka prywatności zaplanowana po podstawowym MVP. |
 
 ## Minimalny zakres prezentacji na oddanie
 
