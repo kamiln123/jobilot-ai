@@ -17,6 +17,15 @@ function getDailyLimit() {
   return Number.isInteger(configured) && configured >= 1 && configured <= 100 ? configured : 10;
 }
 
+function quotaDiagnosticCode(error: { code?: string | null } | null) {
+  const code = error?.code ?? "UNKNOWN";
+  if (code === "PGRST202") return "FUNCTION_MISSING";
+  if (code === "42501") return "PERMISSION";
+  if (code === "42P01") return "TABLE_MISSING";
+  if (code === "PGRST301") return "AUTH";
+  return `RPC_${code.replace(/[^A-Z0-9_]/gi, "").slice(0, 24) || "UNKNOWN"}`;
+}
+
 export async function POST(request: NextRequest) {
   if (process.env.AI_GLOBAL_ENABLED !== "true") {
     return response("Funkcje AI są obecnie wyłączone.", 503);
@@ -94,7 +103,11 @@ export async function POST(request: NextRequest) {
   const { data: quota, error: quotaError } = await supabase
     .rpc("reserve_ai_operation", { p_daily_limit: getDailyLimit() })
     .maybeSingle<{ allowed: boolean; operation_count: number }>();
-  if (quotaError || !quota) return response("Nie udało się sprawdzić limitu AI.", 503);
+  if (quotaError || !quota) {
+    const diagnostic = quotaDiagnosticCode(quotaError);
+    console.error("AI_QUOTA_RPC", { diagnostic });
+    return response(`Nie udało się sprawdzić limitu AI. Kod: AI-QUOTA-${diagnostic}.`, 503);
+  }
   if (!quota.allowed) return response(`Wykorzystano dzienny limit ${getDailyLimit()} operacji AI.`, 429);
 
   try {
