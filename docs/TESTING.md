@@ -87,7 +87,7 @@
 | AI-02 | Brak zgody AI | wywołanie zablokowane |
 | AI-03 | Zapis wyniku AI | zapisany tylko świadomie wybrany wynik, nie pełen prompt ani historia |
 | AI-04 | Analiza CV względem oferty | po zgodzie wynik zawiera dopasowanie, mocne strony, braki i rekomendacje; roboczy wynik nie przetrwa odświeżenia bez kliknięcia zapisu |
-| AI-05 | Cover Letter | AI tworzy edytowalny list motywacyjny; zapis następuje wyłącznie po kliknięciu użytkownika i pozostaje po odświeżeniu |
+| AI-05 | Cover Letter | AI tworzy edytowalny list motywacyjny; zapis następuje wyłącznie po kliknięciu użytkownika, pozostaje po odświeżeniu i może być później edytowany bez tworzenia duplikatu |
 | AI-06 | Wycofanie zgody | po wycofaniu zgody kolejne żądanie do AI jest blokowane przed wysłaniem CV do dostawcy |
 | AI-07 | Limit dzienny | jedenaste żądanie przy limicie 10 jest blokowane czytelnym komunikatem; dostawca AI nie otrzymuje danych |
 | AI-08 | Granica sieci | przeglądarka wysyła żądanie tylko do `/api/ai/generate`; nie komunikuje się bezpośrednio z Gemini |

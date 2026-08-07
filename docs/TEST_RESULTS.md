@@ -19,7 +19,7 @@
 | AI-02 | PREVIEW | PASS | Świadoma zgoda zapisała się prawidłowo. Interfejs pokazał komunikat sukcesu, akcje analizy, generowania listu i wycofania zgody oraz informację o braku automatycznego zapisu wyników. Przycisk wycofania zgody poprawiono na osobny kafelek ostrzegawczy. |
 | AI-04 | PREVIEW | PASS | Po poprawkach limitu, timeoutu i struktury `generateContent` Gemini zwróciło analizę z oceną `25/100`, sekcjami mocnych stron, braków i rekomendacji oraz informacją o pozostałych operacjach. Niezapisany wynik zniknął po odświeżeniu. Test świadomego zapisu wyniku oczekuje na poprawkę odblokowania przycisku. Końcowy test zgodności licznika Jobilot z panelem Gemini wykonamy podczas finalnej walidacji MVP. |
 | AI-03 | PREVIEW | PASS | Przycisk świadomego zapisu działa. Zapis potwierdzono komunikatem sukcesu; „Ostatnio zapisana analiza” z wynikiem, datą i godziną jest widoczna także po odświeżeniu. Nie zapisujemy promptu ani historii rozmowy. |
-| AI-05 | PREVIEW | FAIL → FIX PREPARED | Gemini wygenerowało edytowalny list motywacyjny. Użytkownik zmienił treść, zapisał ją świadomie i otrzymał komunikat sukcesu. Komunikat znika po odświeżeniu prawidłowo, lecz zapisany list nie był odczytywany w interfejsie; dodano widok ostatnio zapisanego listu i przygotowano retest. |
+| AI-05 | PREVIEW | PASS → EDIT RETEST | Gemini wygenerowało edytowalny list motywacyjny. Użytkownik zmienił treść, zapisał ją świadomie i otrzymał komunikat sukcesu. „Ostatnio zapisany list motywacyjny” pozostaje widoczny po odświeżeniu. Dodano późniejszą edycję zapisanej wersji bez tworzenia duplikatu; retest tej części oczekuje na Preview. |
 | AI-03, AI-05–AI-08 | PREVIEW | PENDING | Oczekują na ręczny test z zalogowanym użytkownikiem i jego świadomą zgodą. |
 
 ## Konwencja

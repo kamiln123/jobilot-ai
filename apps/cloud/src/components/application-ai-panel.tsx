@@ -12,7 +12,7 @@ type MatchAnalysis = {
 };
 
 type SavedAnalysis = MatchAnalysis & { createdAt: string };
-type SavedCoverLetter = { content: string; createdAt: string };
+type SavedCoverLetter = { id: string; content: string; createdAt: string; updatedAt: string };
 
 const policyVersion = "mvp-gemini-free-2026-08-07";
 
@@ -22,6 +22,7 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
   const [savedAnalysis, setSavedAnalysis] = useState<SavedAnalysis | null>(null);
   const [coverLetter, setCoverLetter] = useState("");
   const [savedCoverLetter, setSavedCoverLetter] = useState<SavedCoverLetter | null>(null);
+  const [editingCoverLetterId, setEditingCoverLetterId] = useState<string | null>(null);
   const [busy, setBusy] = useState<"analysis" | "cover-letter" | "save-analysis" | "save-letter" | "consent" | null>(null);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -50,7 +51,7 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
           .maybeSingle(),
         supabase
           .from("cover_letters")
-          .select("content,created_at")
+          .select("id,content,created_at,updated_at")
           .eq("application_id", applicationId)
           .is("deleted_at", null)
           .order("created_at", { ascending: false })
@@ -61,7 +62,9 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
       setConsented(Boolean(consent && !consent.revoked_at && consent.policy_version === policyVersion));
       const result = saved?.result;
       if (isMatchAnalysis(result) && saved?.created_at) setSavedAnalysis({ ...result, createdAt: saved.created_at });
-      if (savedLetter?.content && savedLetter.created_at) setSavedCoverLetter({ content: savedLetter.content, createdAt: savedLetter.created_at });
+      if (savedLetter?.id && savedLetter.content && savedLetter.created_at && savedLetter.updated_at) {
+        setSavedCoverLetter({ id: savedLetter.id, content: savedLetter.content, createdAt: savedLetter.created_at, updatedAt: savedLetter.updated_at });
+      }
     }
     void loadPanelData();
     return () => { active = false; };
@@ -127,7 +130,10 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
       const payload = await result.json() as { error?: string; result?: MatchAnalysis | { content: string }; remaining?: number };
       if (!result.ok || !payload.result) throw new Error(payload.error ?? "Nie udało się wykonać operacji AI.");
       if (operation === "analysis") setAnalysis(payload.result as MatchAnalysis);
-      else setCoverLetter((payload.result as { content: string }).content);
+      else {
+        setEditingCoverLetterId(null);
+        setCoverLetter((payload.result as { content: string }).content);
+      }
       setMessage(`Wynik nie został jeszcze zapisany. Pozostało dziś operacji AI: ${payload.remaining ?? "—"}.`);
     } catch (runError) {
       setError(runError instanceof Error ? runError.message : "Nie udało się wykonać operacji AI.");
@@ -171,15 +177,16 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
     }
     setBusy("save-letter");
     setError("");
-    const { data: saved, error: saveError } = await getSupabaseBrowserClient().from("cover_letters").insert({
-      application_id: applicationId,
-      content: coverLetter.trim(),
-    }).select("content,created_at").single();
+    const supabase = getSupabaseBrowserClient();
+    const { data: saved, error: saveError } = editingCoverLetterId
+      ? await supabase.from("cover_letters").update({ content: coverLetter.trim() }).eq("id", editingCoverLetterId).select("id,content,created_at,updated_at").single()
+      : await supabase.from("cover_letters").insert({ application_id: applicationId, content: coverLetter.trim() }).select("id,content,created_at,updated_at").single();
     if (saveError) setError("Nie udało się zapisać listu motywacyjnego.");
     else {
-      setSavedCoverLetter({ content: saved.content, createdAt: saved.created_at });
+      setSavedCoverLetter({ id: saved.id, content: saved.content, createdAt: saved.created_at, updatedAt: saved.updated_at });
+      setEditingCoverLetterId(null);
       setCoverLetter("");
-      setMessage("List motywacyjny został zapisany przy tej aplikacji.");
+      setMessage(editingCoverLetterId ? "List motywacyjny został zaktualizowany przy tej aplikacji." : "List motywacyjny został zapisany przy tej aplikacji.");
     }
     setBusy(null);
   }
@@ -245,9 +252,9 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
 
       {coverLetter ? (
         <article className="mt-5 rounded-xl border border-[#dfe7dc] bg-white p-5">
-          <h3 className="font-semibold">Roboczy list motywacyjny</h3>
+          <h3 className="font-semibold">{editingCoverLetterId ? "Edytuj zapisany list motywacyjny" : "Roboczy list motywacyjny"}</h3>
           <textarea className="mt-4 min-h-64 w-full rounded-xl border border-[#dfe3da] p-3 text-sm leading-6" maxLength={20000} onChange={(event) => setCoverLetter(event.target.value)} value={coverLetter} />
-          <button className="mt-4 rounded-xl border border-[#2d5034] px-4 py-3 text-sm font-semibold text-[#294b30] disabled:opacity-60" disabled={busy !== null} onClick={() => void saveCoverLetter()} type="button">{busy === "save-letter" ? "Zapisywanie…" : "Zapisz list motywacyjny"}</button>
+          <button className="mt-4 rounded-xl border border-[#2d5034] px-4 py-3 text-sm font-semibold text-[#294b30] disabled:opacity-60" disabled={busy !== null} onClick={() => void saveCoverLetter()} type="button">{busy === "save-letter" ? "Zapisywanie…" : editingCoverLetterId ? "Zapisz zmiany" : "Zapisz list motywacyjny"}</button>
         </article>
       ) : null}
 
@@ -256,6 +263,7 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
           <h3 className="font-semibold">Ostatnio zapisany list motywacyjny</h3>
           <p className="mt-1 text-xs text-[#687167]">Zapisany: {new Intl.DateTimeFormat("pl-PL", { dateStyle: "medium", timeStyle: "short" }).format(new Date(savedCoverLetter.createdAt))}</p>
           <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-[#4d564c]">{savedCoverLetter.content}</p>
+          <button className="mt-4 rounded-xl border border-[#2d5034] px-4 py-3 text-sm font-semibold text-[#294b30]" onClick={() => { setEditingCoverLetterId(savedCoverLetter.id); setCoverLetter(savedCoverLetter.content); }} type="button">Edytuj zapisany list</button>
         </article>
       ) : null}
     </section>
