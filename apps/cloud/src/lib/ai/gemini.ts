@@ -11,6 +11,13 @@ export type GeminiUsage = { inputTokens: number; outputTokens: number };
 
 const MAX_OUTPUT_TOKENS = 1400;
 
+export class GeminiProviderError extends Error {
+  constructor(public readonly diagnostic: string) {
+    super("AI_PROVIDER");
+    this.name = "GeminiProviderError";
+  }
+}
+
 export async function generateWithGemini({
   apiKey,
   model,
@@ -34,31 +41,38 @@ export async function generateWithGemini({
     ? "Porównaj CV z ofertą. Zwróć wyłącznie poprawny JSON: {\"score\": liczba 0-100, \"strengths\": [maks. 5 krótkich punktów], \"gaps\": [maks. 5 krótkich punktów], \"recommendations\": [maks. 5 konkretnych rekomendacji]}. Nie wymyślaj faktów spoza CV i oferty."
     : "Napisz profesjonalny, konkretny list motywacyjny po polsku na podstawie CV i oferty. Nie wymyślaj doświadczenia. Zwróć wyłącznie poprawny JSON: {\"content\": \"treść listu\"}. Maksymalnie 350 słów.";
 
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`,
-    {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      signal: AbortSignal.timeout(25_000),
-      body: JSON.stringify({
-        contents: [{
-          role: "user",
-          parts: [
-            { text: `${task}\n\nFirma: ${companyName}\nStanowisko: ${positionTitle}\nOpis oferty: ${jobDescription ?? "brak"}\nWymagania: ${jobRequirements ?? "brak"}` },
-            { inlineData: { mimeType: "application/pdf", data: cvPdfBase64 } },
-          ],
-        }],
-        generationConfig: {
-          responseMimeType: "application/json",
-          maxOutputTokens: MAX_OUTPUT_TOKENS,
-          temperature: 0.25,
-        },
-      }),
-    },
-  );
+  let response: Response;
+  try {
+    response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        signal: AbortSignal.timeout(25_000),
+        body: JSON.stringify({
+          contents: [{
+            role: "user",
+            parts: [
+              { text: `${task}\n\nFirma: ${companyName}\nStanowisko: ${positionTitle}\nOpis oferty: ${jobDescription ?? "brak"}\nWymagania: ${jobRequirements ?? "brak"}` },
+              { inlineData: { mimeType: "application/pdf", data: cvPdfBase64 } },
+            ],
+          }],
+          generationConfig: {
+            responseMimeType: "application/json",
+            maxOutputTokens: MAX_OUTPUT_TOKENS,
+            temperature: 0.25,
+          },
+        }),
+      },
+    );
+  } catch (error) {
+    const diagnostic = error instanceof DOMException && error.name === "TimeoutError" ? "TIMEOUT" : "NETWORK";
+    throw new GeminiProviderError(diagnostic);
+  }
 
   if (!response.ok) {
-    throw new Error(response.status === 429 ? "AI_LIMIT" : "AI_PROVIDER");
+    if (response.status === 429) throw new Error("AI_LIMIT");
+    throw new GeminiProviderError(`HTTP_${response.status}`);
   }
 
   const payload = await response.json() as {
