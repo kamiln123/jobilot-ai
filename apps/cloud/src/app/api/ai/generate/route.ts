@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
-import { GeminiProviderError, generateWithGemini, type AiOperation } from "@/lib/ai/gemini";
+import { GeminiProviderError, GeminiResponseError, generateWithGemini, type AiOperation } from "@/lib/ai/gemini";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -150,6 +150,10 @@ export async function POST(request: NextRequest) {
     if (error instanceof GeminiProviderError) {
       console.error("AI_PROVIDER", { diagnostic: error.diagnostic });
       return response(`Nie udało się połączyć z dostawcą AI. Kod: AI-PROVIDER-${error.diagnostic}.`, 502);
+    }
+    if (error instanceof GeminiResponseError) {
+      console.error("AI_RESPONSE", { diagnostic: error.diagnostic });
+      return response(`AI zwróciło nieprawidłową odpowiedź. Kod: AI-RESPONSE-${error.diagnostic}.`, 502);
     }
     if (error instanceof Error && error.message === "AI_RESPONSE") {
       return response("AI zwróciło nieprawidłową odpowiedź. Spróbuj ponownie.", 502);

@@ -19,6 +19,13 @@ export class GeminiProviderError extends Error {
   }
 }
 
+export class GeminiResponseError extends Error {
+  constructor(public readonly diagnostic: string) {
+    super("AI_RESPONSE");
+    this.name = "GeminiResponseError";
+  }
+}
+
 export async function generateWithGemini({
   apiKey,
   model,
@@ -81,13 +88,18 @@ export async function generateWithGemini({
     usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number };
   };
   const text = payload.candidates?.[0]?.content?.parts?.map((part) => part.text ?? "").join("").trim();
-  if (!text) throw new Error("AI_RESPONSE");
+  if (!text) throw new GeminiResponseError("EMPTY");
+
+  const jsonText = text
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/, "")
+    .trim();
 
   let parsed: unknown;
   try {
-    parsed = JSON.parse(text);
+    parsed = JSON.parse(jsonText);
   } catch {
-    throw new Error("AI_RESPONSE");
+    throw new GeminiResponseError("INVALID_JSON");
   }
 
   const usage = {
@@ -95,8 +107,12 @@ export async function generateWithGemini({
     outputTokens: Math.max(0, payload.usageMetadata?.candidatesTokenCount ?? 0),
   };
 
-  if (operation === "analysis") return { result: validateAnalysis(parsed), usage };
-  return { result: validateCoverLetter(parsed), usage };
+  try {
+    if (operation === "analysis") return { result: validateAnalysis(parsed), usage };
+    return { result: validateCoverLetter(parsed), usage };
+  } catch {
+    throw new GeminiResponseError("INVALID_SCHEMA");
+  }
 }
 
 function shortTextList(value: unknown) {
