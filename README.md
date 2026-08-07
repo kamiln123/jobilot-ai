@@ -14,7 +14,7 @@ Do 8 sierpnia 2026 powstaną dwa działające produkty portfolio: aplikacja webo
 - Supabase (Auth, PostgreSQL, Storage, Row Level Security) dla Cloud
 - Tauri + React/TypeScript + SQLite dla aplikacji desktopowej Local Vault
 - Zod i React Hook Form do walidacji
-- Route Handlers Next.js jako AI Gateway do OpenAI
+- Route Handlers Next.js jako AI Gateway; w MVP tymczasowo Gemini Free Tier, docelowo OpenAI
 - Vitest i Playwright do testów
 
 ## Główne funkcje MVP
@@ -54,4 +54,4 @@ Plik [`.env.example`](.env.example) jest wyłącznie szablonem — celowo nie za
 
 ## Status
 
-Faza przygotowania produktu i dokumentacji. Implementacja rozpocznie się od fundamentów aplikacji, modelu danych oraz zabezpieczeń Cloud Mode i Local Vault Mode.
+Implementacja podstawowego MVP jest ukończona w Cloud Mode i Local Vault. Cloud AI korzysta tymczasowo z `gemini-3-flash-preview` w Free Tier — interfejs pokazuje zakres przekazywanych danych i ostrzega, że Google może wykorzystać je do ulepszania produktów. Docelowym dostawcą pozostaje OpenAI za tym samym AI Gateway. Trwają końcowe testy jakości, kontroli dostępu i limitów przed pull requestem oraz wdrożeniem produkcyjnym.

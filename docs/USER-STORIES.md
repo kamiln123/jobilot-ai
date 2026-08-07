@@ -88,7 +88,7 @@ Jako użytkownik Cloud Mode chcę porównać CV z wybraną ofertą, abym zobaczy
 
 Jako użytkownik Cloud Mode chcę wygenerować i edytować list motywacyjny dla Application, abym szybciej przygotował spersonalizowaną aplikację.
 
-**Akceptacja:** wygenerowany tekst można edytować; zapis tworzy Cover Letter z `created_at` i `updated_at`; soft delete nie usuwa danych historycznych bez potrzeby.
+**Akceptacja:** wygenerowany tekst można edytować; świadomy zapis tworzy Cover Letter z `created_at` i `updated_at`; zapisana wersja jest widoczna po odświeżeniu, można ją później edytować bez tworzenia duplikatu; soft delete nie usuwa danych historycznych bez potrzeby.
 
 ### US-14 — limity AI
 

@@ -1,6 +1,6 @@
 # PRD — Jobilot AI
 
-**Wersja:** 0.4
+**Wersja:** 0.5
 **Data:** 7 sierpnia 2026
 **Termin MVP:** 8 sierpnia 2026
 **Status:** MVP w realizacji
@@ -129,4 +129,4 @@ Snapshot CV w Application zawiera co najmniej: `cv_version_id`, nazwę pliku, nu
 - Limit darmowy: domyślnie 10 operacji AI dziennie; można zmienić konfiguracją serwera.
 - Tymczasowy model MVP: `gemini-3-flash-preview` w Gemini API Free Tier. Dostawca docelowy: OpenAI. Zamiana jest realizowana przez adapter AI Gateway, bez zmiany ekranów, zgód, limitów ani modelu danych.
 - MVP: CV tylko w PDF, maksymalnie 5 MB. W 1.1 planujemy `.docx`, pod warunkiem walidacji MIME, rozszerzenia, limitu rozmiaru i bezpiecznego przetwarzania pliku.
-- Local Vault MVP korzysta z IndexedDB; model szyfrowania lokalnego backupu zostaje odłożony do 1.1.
+- Local Vault MVP korzysta z lokalnej bazy SQLite i prywatnego katalogu aplikacji dla kopii PDF; model szyfrowania lokalnego backupu zostaje odłożony do 1.1.
