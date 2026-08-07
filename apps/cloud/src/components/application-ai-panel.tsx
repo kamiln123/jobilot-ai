@@ -152,7 +152,7 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-sm font-medium text-[#456a4b]">AI w Cloud Mode</p>
-          <h2 className="mt-1 text-lg font-semibold">Analiza CV i list motywacyjny</h2>
+          <h2 className="mt-1 text-lg font-semibold">Analiza CV i listu motywacyjnego</h2>
         </div>
         <span className="rounded-full bg-[#edf4eb] px-3 py-1 text-xs font-semibold text-[#315b3a]">Gemini 3 Flash Preview · Free Tier MVP</span>
       </div>

@@ -1,10 +1,22 @@
 # Wyniki testów — Jobilot AI
 
-## Sprint 5 — AI Gateway (oczekuje na test integracyjny)
+## Sprint 5 — AI Gateway (test przed pull requestem)
 
-- Status: PENDING.
-- Warunek rozpoczęcia: zastosowana migracja `20260807190000_add_ai_usage_functions.sql` oraz wdrożenie Cloud Mode z sekretem `GEMINI_API_KEY`.
+- Status: IN PROGRESS.
+- Migracja `20260807190000_add_ai_usage_functions.sql` została zastosowana w Supabase.
+- Sekret `GEMINI_API_KEY` jest skonfigurowany w Vercel i nie znajduje się w repozytorium.
 - Plan przypadków testowych: `docs/TESTING.md`, pozycje `AI-01` do `AI-08`.
+
+### 7 sierpnia 2026 — kontrola automatyczna i Vercel Preview
+
+| ID | Środowisko | Status | Wynik |
+| --- | --- | --- | --- |
+| BUILD-12 | LOCAL | PASS | `npm run lint` zakończył się bez błędów. |
+| BUILD-13 | LOCAL | PASS | Pełny `npm run build`, kontrola TypeScript i generowanie tras, w tym `/api/ai/generate`, zakończyły się kodem 0. |
+| PREVIEW-01 | PREVIEW | PASS | Wdrożenie Preview osiągnęło status `Ready`; strona `/login` zwraca HTTP 200. Produkcja nie została zmieniona. |
+| AI-CONFIG-01 | PREVIEW | FAIL → PASS | Pierwsze wdrożenie nie widziało zmiennej dodanej po buildzie i zwracało 503. Po ponownym wdrożeniu Preview endpoint AI bez sesji zwraca prawidłowe HTTP 401. |
+| AI-01 | PREVIEW | PASS | Po otwarciu Application użytkownik zobaczył sekcję AI, dostawcę i wariant modelu, zakres przesyłanych danych, informację o Free Tier, ostrzeżenie o błędach AI oraz przycisk świadomej zgody. Przed zgodą nie można uruchomić analizy. |
+| AI-02–AI-08 | PREVIEW | PENDING | Oczekują na ręczny test z zalogowanym użytkownikiem i jego świadomą zgodą. |
 
 ## Konwencja
 
