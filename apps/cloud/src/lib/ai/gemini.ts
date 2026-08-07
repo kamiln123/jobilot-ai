@@ -85,14 +85,13 @@ export async function generateWithGemini({
             ],
           }],
           generationConfig: {
-            responseFormat: {
-              text: {
-                mimeType: "application/json",
-                schema: operation === "analysis" ? analysisSchema : coverLetterSchema,
-              },
+            responseMimeType: "application/json",
+            responseSchema: operation === "analysis" ? analysisSchema : coverLetterSchema,
+            thinkingConfig: {
+              thinkingLevel: "low",
             },
             maxOutputTokens: MAX_OUTPUT_TOKENS,
-            temperature: 0.25,
+            temperature: 1,
           },
         }),
       },
