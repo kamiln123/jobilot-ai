@@ -103,8 +103,9 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
       setMessage(`Wynik nie został jeszcze zapisany. Pozostało dziś operacji AI: ${payload.remaining ?? "—"}.`);
     } catch (runError) {
       setError(runError instanceof Error ? runError.message : "Nie udało się wykonać operacji AI.");
+    } finally {
+      setBusy(null);
     }
-    setBusy(null);
   }
 
   async function saveAnalysis() {
@@ -193,7 +194,7 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
           <AnalysisList label="Mocne strony" items={analysis.strengths} />
           <AnalysisList label="Braki lub ryzyka" items={analysis.gaps} />
           <AnalysisList label="Rekomendacje" items={analysis.recommendations} />
-          <button className="mt-4 rounded-xl border border-[#2d5034] px-4 py-3 text-sm font-semibold text-[#294b30] disabled:opacity-60" disabled={busy !== null} onClick={() => void saveAnalysis()} type="button">{busy === "save-analysis" ? "Zapisywanie…" : "Zapisz analizę"}</button>
+          <button className="mt-4 rounded-xl border border-[#2d5034] px-4 py-3 text-sm font-semibold text-[#294b30] disabled:opacity-60" disabled={busy === "save-analysis"} onClick={() => void saveAnalysis()} type="button">{busy === "save-analysis" ? "Zapisywanie…" : "Zapisz analizę"}</button>
         </article>
       ) : null}
 
