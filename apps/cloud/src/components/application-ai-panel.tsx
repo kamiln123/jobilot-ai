@@ -12,6 +12,7 @@ type MatchAnalysis = {
 };
 
 type SavedAnalysis = MatchAnalysis & { createdAt: string };
+type SavedCoverLetter = { content: string; createdAt: string };
 
 const policyVersion = "mvp-gemini-free-2026-08-07";
 
@@ -20,6 +21,7 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
   const [analysis, setAnalysis] = useState<MatchAnalysis | null>(null);
   const [savedAnalysis, setSavedAnalysis] = useState<SavedAnalysis | null>(null);
   const [coverLetter, setCoverLetter] = useState("");
+  const [savedCoverLetter, setSavedCoverLetter] = useState<SavedCoverLetter | null>(null);
   const [busy, setBusy] = useState<"analysis" | "cover-letter" | "save-analysis" | "save-letter" | "consent" | null>(null);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -30,7 +32,7 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
       const supabase = getSupabaseBrowserClient();
       const { data: sessionData } = await supabase.auth.getSession();
       if (!sessionData.session || !active) return;
-      const [{ data: consent }, { data: saved }] = await Promise.all([
+      const [{ data: consent }, { data: saved }, { data: savedLetter }] = await Promise.all([
         supabase
           .from("ai_consents")
           .select("provider,policy_version,revoked_at")
@@ -46,11 +48,20 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
           .order("created_at", { ascending: false })
           .limit(1)
           .maybeSingle(),
+        supabase
+          .from("cover_letters")
+          .select("content,created_at")
+          .eq("application_id", applicationId)
+          .is("deleted_at", null)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle(),
       ]);
       if (!active) return;
       setConsented(Boolean(consent && !consent.revoked_at && consent.policy_version === policyVersion));
       const result = saved?.result;
       if (isMatchAnalysis(result) && saved?.created_at) setSavedAnalysis({ ...result, createdAt: saved.created_at });
+      if (savedLetter?.content && savedLetter.created_at) setSavedCoverLetter({ content: savedLetter.content, createdAt: savedLetter.created_at });
     }
     void loadPanelData();
     return () => { active = false; };
@@ -160,12 +171,16 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
     }
     setBusy("save-letter");
     setError("");
-    const { error: saveError } = await getSupabaseBrowserClient().from("cover_letters").insert({
+    const { data: saved, error: saveError } = await getSupabaseBrowserClient().from("cover_letters").insert({
       application_id: applicationId,
       content: coverLetter.trim(),
-    });
+    }).select("content,created_at").single();
     if (saveError) setError("Nie udało się zapisać listu motywacyjnego.");
-    else setMessage("List motywacyjny został zapisany przy tej aplikacji.");
+    else {
+      setSavedCoverLetter({ content: saved.content, createdAt: saved.created_at });
+      setCoverLetter("");
+      setMessage("List motywacyjny został zapisany przy tej aplikacji.");
+    }
     setBusy(null);
   }
 
@@ -233,6 +248,14 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
           <h3 className="font-semibold">Roboczy list motywacyjny</h3>
           <textarea className="mt-4 min-h-64 w-full rounded-xl border border-[#dfe3da] p-3 text-sm leading-6" maxLength={20000} onChange={(event) => setCoverLetter(event.target.value)} value={coverLetter} />
           <button className="mt-4 rounded-xl border border-[#2d5034] px-4 py-3 text-sm font-semibold text-[#294b30] disabled:opacity-60" disabled={busy !== null} onClick={() => void saveCoverLetter()} type="button">{busy === "save-letter" ? "Zapisywanie…" : "Zapisz list motywacyjny"}</button>
+        </article>
+      ) : null}
+
+      {savedCoverLetter ? (
+        <article className="mt-5 rounded-xl border border-[#cfe1cc] bg-[#f7fbf5] p-5">
+          <h3 className="font-semibold">Ostatnio zapisany list motywacyjny</h3>
+          <p className="mt-1 text-xs text-[#687167]">Zapisany: {new Intl.DateTimeFormat("pl-PL", { dateStyle: "medium", timeStyle: "short" }).format(new Date(savedCoverLetter.createdAt))}</p>
+          <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-[#4d564c]">{savedCoverLetter.content}</p>
         </article>
       ) : null}
     </section>
