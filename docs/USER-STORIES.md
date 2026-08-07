@@ -50,7 +50,7 @@ Jako użytkownik chcę zachować link lub plik portfolio i przypisać go do wiel
 
 Jako użytkownik chcę ręcznie zapisać ofertę pracy, abym mógł śledzić pozycje znalezione na różnych portalach.
 
-**Akceptacja:** formularz zawiera firmę i stanowisko oraz opcjonalnie opis, wymagania, lokalizację, wynagrodzenie, link i notatki; zapis jest możliwy w obu trybach.
+**Akceptacja:** formularz zawiera firmę i stanowisko oraz opcjonalnie opis, wymagania, lokalizację, wynagrodzenie, link i notatki; zapis jest możliwy w obu trybach; użytkownik może otworzyć szczegóły własnej oferty. Link HTTP(S) jest klikalny, a nieobsługiwany lub niekompletny adres pozostaje bezpiecznym tekstem nieklikalnym.
 
 ### US-08 — utworzenie Application
 
@@ -103,3 +103,11 @@ Jako właściciel produktu chcę limitować operacje AI na użytkownika, abym og
 Jako użytkownik Local Vault chcę wyeksportować swoje dane do pliku JSON, abym zachował nad nimi kontrolę.
 
 **Akceptacja:** eksport zawiera dane użytkownika z lokalnego sejfu bez sekretów; nie wysyła danych do serwera; użytkownik świadomie pobiera plik.
+
+## Po MVP
+
+### US-16 — CV w formacie Word
+
+Jako użytkownik chcę wgrać CV w formacie Word (`.docx`), abym nie musiał przed zapisem ręcznie konwertować go do PDF.
+
+**Akceptacja:** funkcja jest dostępna po MVP; plik `.docx` przechodzi walidację rozszerzenia, MIME i rozmiaru; tworzy niezmienną wersję CV tak jak PDF; plik nie jest automatycznie wysyłany do AI.

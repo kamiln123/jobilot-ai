@@ -1,9 +1,9 @@
 # PRD — Jobilot AI
 
-**Wersja:** 0.1
-**Data:** 2 sierpnia 2026
+**Wersja:** 0.3
+**Data:** 5 sierpnia 2026
 **Termin MVP:** 8 sierpnia 2026
-**Status:** zatwierdzone założenia robocze
+**Status:** MVP w realizacji
 
 ## 1. Cel i miara sukcesu
 
@@ -17,7 +17,7 @@ MVP uznajemy za gotowe, gdy użytkownik potrafi w wybranym trybie utworzyć ofer
 
 - Rejestracja, logowanie i wylogowanie przez e-mail oraz hasło.
 - Własne, odseparowane dane użytkownika dzięki Supabase RLS.
-- Biblioteka CV z wersjami; poprzednia wersja nigdy nie jest nadpisywana.
+- Biblioteka CV z wersjami; poprzednia wersja nigdy nie jest nadpisywana. W MVP akceptowane jest wyłącznie CV w formacie PDF do 5 MB.
 - Ręczne dodawanie, edycja i archiwizacja Job Offer.
 - Tworzenie Application z ofertą, CV, portfolio i bieżącym statusem.
 - Portfolio jako plik lub link; wiele elementów w jednej Application.
@@ -39,6 +39,7 @@ MVP uznajemy za gotowe, gdy użytkownik potrafi w wybranym trybie utworzyć ofer
 - AI Job Discovery (wersja 1.1).
 - Rozbudowane statystyki i analityka (1.1).
 - Szyfrowane lokalne kopie zapasowe (1.1).
+- Obsługa CV w formacie Word (`.docx`) po analizie bezpieczeństwa przetwarzania i limitów pliku (1.1).
 - Interview Coach z głosem i raportami (2.0).
 - Integracje LinkedIn, automatyczne pobieranie ogłoszeń, automatyczne aplikowanie.
 
@@ -59,8 +60,8 @@ MVP uznajemy za gotowe, gdy użytkownik potrafi w wybranym trybie utworzyć ofer
 | --- | --- | --- |
 | FR-01 | Cloud i Local Vault są odrębnymi aplikacjami uruchamianymi niezależnie; żadna z nich nie pokazuje ekranu wyboru trybu. | Must |
 | FR-02 | Cloud Mode zapewnia rejestrację i logowanie e-mail/hasło. | Must |
-| FR-03 | Użytkownik może tworzyć CV i kolejne wersje bez nadpisywania poprzednich. | Must |
-| FR-04 | Job Offer przechowuje firmę, stanowisko, opis, wymagania, lokalizację, wynagrodzenie, link i notatki. | Must |
+| FR-03 | Użytkownik może tworzyć CV PDF do 5 MB i kolejne wersje bez nadpisywania poprzednich. Obsługa `.docx` jest planowana po MVP. | Must |
+| FR-04 | Job Offer przechowuje firmę, stanowisko, opis, wymagania, lokalizację, wynagrodzenie, link i notatki; użytkownik może otworzyć widok szczegółów własnej oferty. Link jest klikalny wyłącznie dla HTTP(S); inne wartości pozostają tekstem nieklikalnym. | Must |
 | FR-05 | Application jest powiązana z jedną ofertą, aktualnym statusem i snapshotem wybranego CV. | Must |
 | FR-06 | Do Application można przypisać wiele Portfolio Artifact. | Must |
 | FR-07 | Każda zmiana statusu tworzy trwały wpis historii z datą. | Must |
@@ -109,6 +110,7 @@ Snapshot CV w Application zawiera co najmniej: `cv_version_id`, nazwę pliku, nu
 ## 8. Kryteria akceptacji MVP
 
 - Dwa konta Cloud Mode nie mogą odczytać ani modyfikować wzajemnych danych.
+- Użytkownik może otworzyć szczegóły wyłącznie własnej Job Offer; bezpieczny link HTTP(S) jest klikalny, a nieobsługiwany protokół nie tworzy aktywnego odnośnika.
 - Po wybraniu wcześniejszej wersji CV dla Application późniejsze dodanie wersji nie zmienia snapshotu tej aplikacji.
 - Po zmianie statusu istnieje nowy wpis historii, a wcześniejszy wpis pozostaje widoczny.
 - Przed pierwszą operacją AI aplikacja wymaga potwierdzenia zgody i wskazuje, jakie dane zostaną wysłane.
@@ -119,5 +121,5 @@ Snapshot CV w Application zawiera co najmniej: `cv_version_id`, nazwę pliku, nu
 ## 9. Otwarte decyzje implementacyjne
 
 - Limit darmowy: domyślnie 10 operacji AI dziennie; można zmienić konfiguracją serwera.
-- Maksymalny rozmiar i format pliku CV należy ustalić przed implementacją uploadu (propozycja: PDF, maks. 5 MB).
+- MVP: CV tylko w PDF, maksymalnie 5 MB. W 1.1 planujemy `.docx`, pod warunkiem walidacji MIME, rozszerzenia, limitu rozmiaru i bezpiecznego przetwarzania pliku.
 - Local Vault MVP korzysta z IndexedDB; model szyfrowania lokalnego backupu zostaje odłożony do 1.1.
