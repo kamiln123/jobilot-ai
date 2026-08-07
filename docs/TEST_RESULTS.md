@@ -22,7 +22,7 @@
 | AI-05 | PREVIEW | PASS | Gemini wygenerowało edytowalny list motywacyjny. Użytkownik zmienił treść, zapisał ją świadomie i otrzymał komunikat sukcesu. „Ostatnio zapisany list motywacyjny” pozostaje widoczny po odświeżeniu. Późniejsza edycja zapisanej wersji, zapis aktualizacji oraz trwałość zmienionej treści po odświeżeniu zostały potwierdzone bez nowego użycia AI i bez tworzenia duplikatu. |
 | AI-06 | PREVIEW | PASS | Wycofanie zgody ukryło akcje analizy i generowania oraz przywróciło ekran świadomej zgody. Stan pozostał wycofany po odświeżeniu. Zapisane wcześniej analiza i list motywacyjny pozostały dostępne lokalnie w Application, bez uruchamiania AI i bez wysyłania danych do Gemini. |
 | AI-07 | PREVIEW | PASS | Po nadaniu zgody pięć kolejnych udanych operacji zmniejszyło licznik z 4 do 0. Kolejna próba wyświetliła komunikat „Wykorzystano dzienny limit 10 operacji AI.” i nie zwróciła nowego wyniku. Podczas testu nie było błędów; licznik użycia w panelu Gemini nie zwiększył się po zablokowanych próbach, co potwierdza blokadę przed wysłaniem danych do dostawcy. |
-| AI-08 | PREVIEW | PENDING | Oczekuje na końcowy test granicy sieci w narzędziach deweloperskich przeglądarki. |
+| AI-08 | PREVIEW | PASS | Network pokazał dokładnie jedno żądanie `fetch` do własnego endpointu Jobilot `/api/ai/generate` ze statusem 429; nie było żądań do `generativelanguage.googleapis.com`, `googleapis.com` ani adresów Gemini. Ręczne otwarcie adresu endpointu w karcie zwróciło 405 dla `GET`, co jest oczekiwane — gateway obsługuje wyłącznie `POST`. |
 
 ## Sprint 6 — jakość i prezentacja (przed pull requestem)
 
