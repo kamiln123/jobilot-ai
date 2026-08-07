@@ -84,10 +84,14 @@ export async function generateWithGemini({
   }
 
   const payload = await response.json() as {
-    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+    candidates?: Array<{ content?: { parts?: Array<{ text?: string; thought?: boolean }> } }>;
     usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number };
   };
-  const text = payload.candidates?.[0]?.content?.parts?.map((part) => part.text ?? "").join("").trim();
+  const text = payload.candidates?.[0]?.content?.parts
+    ?.filter((part) => !part.thought)
+    .map((part) => part.text ?? "")
+    .join("")
+    .trim();
   if (!text) throw new GeminiResponseError("EMPTY");
 
   const jsonText = text
