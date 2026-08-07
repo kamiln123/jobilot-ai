@@ -10,6 +10,7 @@ export type MatchAnalysis = {
 export type GeminiUsage = { inputTokens: number; outputTokens: number };
 
 const MAX_OUTPUT_TOKENS = 1400;
+const REQUEST_TIMEOUT_MS = 55_000;
 
 export class GeminiProviderError extends Error {
   constructor(public readonly diagnostic: string) {
@@ -48,7 +49,7 @@ export async function generateWithGemini({
       {
         method: "POST",
         headers: { "content-type": "application/json" },
-        signal: AbortSignal.timeout(25_000),
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         body: JSON.stringify({
           contents: [{
             role: "user",

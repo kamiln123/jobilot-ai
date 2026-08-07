@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { GeminiProviderError, generateWithGemini, type AiOperation } from "@/lib/ai/gemini";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 const MAX_CV_BYTES = 5 * 1024 * 1024;
 const GEMINI_POLICY_VERSION = "mvp-gemini-free-2026-08-07";
@@ -122,15 +123,25 @@ export async function POST(request: NextRequest) {
       jobDescription: offer.description,
       jobRequirements: offer.requirements,
     });
-    await supabase.rpc("record_ai_usage", {
-      p_input_tokens: generated.usage.inputTokens,
-      p_output_tokens: generated.usage.outputTokens,
-    });
+    const { data: completedQuota, error: completedQuotaError } = await supabase
+      .rpc("complete_ai_operation", {
+        p_daily_limit: getDailyLimit(),
+        p_input_tokens: generated.usage.inputTokens,
+        p_output_tokens: generated.usage.outputTokens,
+      })
+      .maybeSingle<{ allowed: boolean; operation_count: number }>();
+    if (completedQuotaError || !completedQuota) {
+      console.error("AI_QUOTA_COMPLETE", { diagnostic: quotaDiagnosticCode(completedQuotaError) });
+      return response("Nie udało się zapisać wykorzystania AI.", 503);
+    }
+    if (!completedQuota.allowed) {
+      return response(`Wykorzystano dzienny limit ${getDailyLimit()} operacji AI.`, 429);
+    }
 
     return NextResponse.json({
       result: generated.result,
       operation,
-      remaining: Math.max(0, getDailyLimit() - quota.operation_count),
+      remaining: Math.max(0, getDailyLimit() - completedQuota.operation_count),
     });
   } catch (error) {
     if (error instanceof Error && error.message === "AI_LIMIT") {

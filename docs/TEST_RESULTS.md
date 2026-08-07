@@ -17,7 +17,7 @@
 | AI-CONFIG-01 | PREVIEW | FAIL → PASS | Pierwsze wdrożenie nie widziało zmiennej dodanej po buildzie i zwracało 503. Po ponownym wdrożeniu Preview endpoint AI bez sesji zwraca prawidłowe HTTP 401. |
 | AI-01 | PREVIEW | PASS | Po otwarciu Application użytkownik zobaczył sekcję AI, dostawcę i wariant modelu, zakres przesyłanych danych, informację o Free Tier, ostrzeżenie o błędach AI oraz przycisk świadomej zgody. Przed zgodą nie można uruchomić analizy. |
 | AI-02 | PREVIEW | PASS | Świadoma zgoda zapisała się prawidłowo. Interfejs pokazał komunikat sukcesu, akcje analizy, generowania listu i wycofania zgody oraz informację o braku automatycznego zapisu wyników. Przycisk wycofania zgody poprawiono na osobny kafelek ostrzegawczy. |
-| AI-04 | PREVIEW | FAIL → FIX PREPARED | Pierwsza próba analizy została zatrzymana przed połączeniem z Gemini przez błąd limitu. Diagnostyka zwróciła PostgreSQL `42702`: kolizję nazwy `operation_count` między wynikiem funkcji a kolumną. Przygotowano oddzielną migrację naprawczą `20260807201000_fix_ai_quota_operation_count_ambiguity.sql`; retest czeka na jej zastosowanie w Supabase. |
+| AI-04 | PREVIEW | FAIL → FIX PREPARED | Pierwsza próba analizy została zatrzymana przez PostgreSQL `42702` (kolizja nazwy `operation_count`); migracja `20260807201000_fix_ai_quota_operation_count_ambiguity.sql` została zastosowana. Drugi retest przeszedł limit, lecz adapter przerwał połączenie z Gemini po lokalnym timeoutcie 25 s (`AI-PROVIDER-TIMEOUT`). Przygotowano timeout 55 s i migrację `20260807211000_count_only_successful_ai_operations.sql`, aby tylko poprawne wyniki zużywały limit. |
 | AI-03, AI-05–AI-08 | PREVIEW | PENDING | Oczekują na ręczny test z zalogowanym użytkownikiem i jego świadomą zgodą. |
 
 ## Konwencja
