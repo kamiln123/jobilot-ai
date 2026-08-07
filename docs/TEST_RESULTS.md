@@ -18,7 +18,7 @@
 | AI-01 | PREVIEW | PASS | Po otwarciu Application użytkownik zobaczył sekcję AI, dostawcę i wariant modelu, zakres przesyłanych danych, informację o Free Tier, ostrzeżenie o błędach AI oraz przycisk świadomej zgody. Przed zgodą nie można uruchomić analizy. |
 | AI-02 | PREVIEW | PASS | Świadoma zgoda zapisała się prawidłowo. Interfejs pokazał komunikat sukcesu, akcje analizy, generowania listu i wycofania zgody oraz informację o braku automatycznego zapisu wyników. Przycisk wycofania zgody poprawiono na osobny kafelek ostrzegawczy. |
 | AI-04 | PREVIEW | PASS | Po poprawkach limitu, timeoutu i struktury `generateContent` Gemini zwróciło analizę z oceną `25/100`, sekcjami mocnych stron, braków i rekomendacji oraz informacją o pozostałych operacjach. Niezapisany wynik zniknął po odświeżeniu. Test świadomego zapisu wyniku oczekuje na poprawkę odblokowania przycisku. Końcowy test zgodności licznika Jobilot z panelem Gemini wykonamy podczas finalnej walidacji MVP. |
-| AI-03 | PREVIEW | FAIL → FIX PREPARED | Przycisk świadomego zapisu został odblokowany, a zapis analizy potwierdzony komunikatem sukcesu. Po odświeżeniu wynik nie był jednak widoczny w interfejsie, mimo że rekord został zapisany. Dodano odczyt i widok ostatnio zapisanej analizy z `ai_analyses`; retest oczekuje na wdrożenie Preview. |
+| AI-03 | PREVIEW | PASS | Przycisk świadomego zapisu działa. Zapis potwierdzono komunikatem sukcesu; „Ostatnio zapisana analiza” z wynikiem, datą i godziną jest widoczna także po odświeżeniu. Nie zapisujemy promptu ani historii rozmowy. |
 | AI-03, AI-05–AI-08 | PREVIEW | PENDING | Oczekują na ręczny test z zalogowanym użytkownikiem i jego świadomą zgodą. |
 
 ## Konwencja
