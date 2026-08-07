@@ -23,6 +23,13 @@
 | AI-06 | PREVIEW | PASS | Wycofanie zgody ukryło akcje analizy i generowania oraz przywróciło ekran świadomej zgody. Stan pozostał wycofany po odświeżeniu. Zapisane wcześniej analiza i list motywacyjny pozostały dostępne lokalnie w Application, bez uruchamiania AI i bez wysyłania danych do Gemini. |
 | AI-07, AI-08 | PREVIEW | PENDING | Oczekują na końcowy test limitu dziennego i granicy sieci. |
 
+## Sprint 6 — jakość i prezentacja (przed pull requestem)
+
+| ID | Środowisko | Status | Wynik |
+| --- | --- | --- | --- |
+| QA-01 | LOCAL | PASS | `npm.cmd run lint`, `npx.cmd tsc --noEmit` oraz produkcyjny `npx.cmd next build` dla `apps/cloud` zakończyły się poprawnie. Build utworzył artefakt `.next/BUILD_ID`. |
+| QA-02 | LOCAL | PASS | Kontrola śledzonych przez Git plików konfiguracji wykazała wyłącznie szablon `.env.example`; wyszukiwanie typowych wzorców kluczy Gemini, OpenAI i Supabase nie znalazło sekretów poza wartościami zastępczymi. |
+
 ## Konwencja
 
 - `PASS` — wynik zgodny z kryterium.
