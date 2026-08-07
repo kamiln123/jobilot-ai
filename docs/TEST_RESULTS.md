@@ -16,7 +16,8 @@
 | PREVIEW-01 | PREVIEW | PASS | Wdrożenie Preview osiągnęło status `Ready`; strona `/login` zwraca HTTP 200. Produkcja nie została zmieniona. |
 | AI-CONFIG-01 | PREVIEW | FAIL → PASS | Pierwsze wdrożenie nie widziało zmiennej dodanej po buildzie i zwracało 503. Po ponownym wdrożeniu Preview endpoint AI bez sesji zwraca prawidłowe HTTP 401. |
 | AI-01 | PREVIEW | PASS | Po otwarciu Application użytkownik zobaczył sekcję AI, dostawcę i wariant modelu, zakres przesyłanych danych, informację o Free Tier, ostrzeżenie o błędach AI oraz przycisk świadomej zgody. Przed zgodą nie można uruchomić analizy. |
-| AI-02–AI-08 | PREVIEW | PENDING | Oczekują na ręczny test z zalogowanym użytkownikiem i jego świadomą zgodą. |
+| AI-02 | PREVIEW | PASS | Świadoma zgoda zapisała się prawidłowo. Interfejs pokazał komunikat sukcesu, akcje analizy, generowania listu i wycofania zgody oraz informację o braku automatycznego zapisu wyników. Przycisk wycofania zgody poprawiono na osobny kafelek ostrzegawczy. |
+| AI-03–AI-08 | PREVIEW | PENDING | Oczekują na ręczny test z zalogowanym użytkownikiem i jego świadomą zgodą. |
 
 ## Konwencja
 

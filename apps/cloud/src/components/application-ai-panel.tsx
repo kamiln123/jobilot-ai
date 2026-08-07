@@ -179,7 +179,7 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
             <button className="rounded-xl border border-[#2d5034] px-4 py-3 text-sm font-semibold text-[#294b30] disabled:opacity-60" disabled={busy !== null} onClick={() => void run("cover-letter")} type="button">
               {busy === "cover-letter" ? "Generowanie…" : "Wygeneruj list motywacyjny"}
             </button>
-            <button className="px-2 py-3 text-sm font-semibold text-[#687167] underline disabled:opacity-60" disabled={busy !== null} onClick={() => void revokeConsent()} type="button">Wycofaj zgodę AI</button>
+            <button className="rounded-xl border border-[#c56b5c] bg-[#fff7f5] px-4 py-3 text-sm font-semibold text-[#9f4033] transition-colors hover:bg-[#fff0ed] disabled:opacity-60" disabled={busy !== null} onClick={() => void revokeConsent()} type="button">Wycofaj zgodę AI</button>
           </div>
         </div>
       ) : null}
