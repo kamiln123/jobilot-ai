@@ -81,6 +81,7 @@
 | LOCAL-05K | Application end-to-end | lokalna Application łączy ofertę, konkretną wersję CV i wybrane Portfolio; status, data wysłania, historia i notatka pozostają po restarcie, a duplikat aktywnej Application jest blokowany |
 | LOCAL-05L | Edycja portfolio Application | istniejąca Application umożliwia dodanie i usunięcie przypisanych elementów Portfolio bez tworzenia duplikatu Application; zmiana pozostaje po restarcie |
 | LOCAL-06 | Eksport danych | eksport JSON powstaje lokalnie i zawiera wyłącznie dane Local Vault |
+| LOCAL-08 | Instalator Windows | instalator NSIS instaluje Local Vault bez wymagania Rust, Tauri, Node.js ani kompilatora C++ na komputerze użytkownika |
 | LOCAL-07 | Regresja po restarcie | dane każdej domeny oraz powiązanie Application pozostają po zamknięciu i ponownym uruchomieniu aplikacji |
 | AI-01 | Pierwsze użycie AI w Cloud | wyświetlona zgoda, cel i zakres danych |
 | AI-02 | Brak zgody AI | wywołanie zablokowane |

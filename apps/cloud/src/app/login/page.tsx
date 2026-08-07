@@ -188,7 +188,7 @@ function LoginForm() {
         </p>
 
         <p className="mt-8 border-t border-[#edf0e9] pt-5 text-xs leading-5 text-[#858b83]">
-          Local Vault Mode jest osobną aplikacją desktopową i nie korzysta z tego logowania.
+          Local Vault Mode jest osobną aplikacją desktopową i nie korzysta z tego logowania. <Link className="font-semibold text-[#456a4b] hover:text-[#294b30]" href="/local-vault">Pobierz Local Vault dla Windows</Link>.
         </p>
       </section>
     </main>

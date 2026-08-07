@@ -24,7 +24,7 @@ Do 8 sierpnia 2026 powstaną dwa działające produkty portfolio: aplikacja webo
 - Portfolio jako pliki lub linki oraz przypisywanie wielu elementów do Application.
 - Statusy, trwała historia zmian i notatki.
 - Cloud Mode z kontem oraz odseparowanymi danymi użytkowników.
-- Local Vault jako osobna aplikacja Windows bez konta, synchronizacji, AI, telemetrii i komunikacji z usługami zewnętrznymi.
+- Local Vault jako osobna aplikacja Windows bez konta, synchronizacji, AI, telemetrii i komunikacji z usługami zewnętrznymi. Instalator jest publicznie dostępny na stronie `/local-vault`, bez logowania.
 - Opcjonalna analiza AI CV/oferty oraz generator listu motywacyjnego, po świadomej zgodzie użytkownika.
 
 ## Dokumentacja
