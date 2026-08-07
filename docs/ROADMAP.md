@@ -13,7 +13,7 @@
 | 4 sierpnia | 2. Dane rekrutacyjne | CV Library z wersjami, Job Offer i Portfolio Artifact. | Must | Ukończony; Job Offer, CV PDF do 5 MB z wersjami i Portfolio przetestowane ręcznie |
 | 5–6 sierpnia | 3. Application first | Tworzenie Application, snapshot CV, statusy, historia i notatki. | Must | Ukończony; migracja Supabase zastosowana, testy tworzenia, routingu, statusów, historii, notatek i blokady duplikatu PASS |
 | 6 sierpnia | 4. Local Vault | SQLite, lokalne ścieżki CRUD, brak usług zewnętrznych, eksport JSON oraz build Windows. | Must | Ukończony; ręczne testy ofert, CV, Portfolio, Application, relacji, eksportu i trwałości danych PASS |
-| 7 sierpnia | 5. AI bezpiecznie | Zgoda AI, AI Gateway, limity, analiza CV/oferty i Cover Letter. | Must | Implementacja ukończona, a testy AI-01–AI-06 są PASS. Pozostają końcowe testy AI-07 (limit) i AI-08 (granica sieci). Tymczasowy adapter: Gemini Free Tier; docelowy dostawca: OpenAI. |
+| 7 sierpnia | 5. AI bezpiecznie | Zgoda AI, AI Gateway, limity, analiza CV/oferty i Cover Letter. | Must | Implementacja ukończona, a testy AI-01–AI-07 są PASS. Pozostaje AI-08 — końcowe potwierdzenie granicy sieci. Tymczasowy adapter: Gemini Free Tier; docelowy dostawca: OpenAI. |
 | 8 sierpnia | 6. Jakość i prezentacja | Testy krytycznych przepływów, kontrola RLS, kontrola sekretów, README, dane demo i wdrożenie. | Must | W toku — bez PR-a i bez zmiany produkcji do czasu zatwierdzenia pełnych testów. |
 
 ## Minimalny zakres prezentacji na oddanie
