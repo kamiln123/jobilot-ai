@@ -11,11 +11,14 @@ type MatchAnalysis = {
   recommendations: string[];
 };
 
+type SavedAnalysis = MatchAnalysis & { createdAt: string };
+
 const policyVersion = "mvp-gemini-free-2026-08-07";
 
 export function ApplicationAiPanel({ applicationId, cvVersionId }: { applicationId: string; cvVersionId: string }) {
   const [consented, setConsented] = useState<boolean | null>(null);
   const [analysis, setAnalysis] = useState<MatchAnalysis | null>(null);
+  const [savedAnalysis, setSavedAnalysis] = useState<SavedAnalysis | null>(null);
   const [coverLetter, setCoverLetter] = useState("");
   const [busy, setBusy] = useState<"analysis" | "cover-letter" | "save-analysis" | "save-letter" | "consent" | null>(null);
   const [message, setMessage] = useState("");
@@ -23,21 +26,35 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
 
   useEffect(() => {
     let active = true;
-    async function loadConsent() {
+    async function loadPanelData() {
       const supabase = getSupabaseBrowserClient();
       const { data: sessionData } = await supabase.auth.getSession();
       if (!sessionData.session || !active) return;
-      const { data } = await supabase
-        .from("ai_consents")
-        .select("provider,policy_version,revoked_at")
-        .eq("user_id", sessionData.session.user.id)
-        .eq("provider", "gemini")
-        .maybeSingle();
-      if (active) setConsented(Boolean(data && !data.revoked_at && data.policy_version === policyVersion));
+      const [{ data: consent }, { data: saved }] = await Promise.all([
+        supabase
+          .from("ai_consents")
+          .select("provider,policy_version,revoked_at")
+          .eq("user_id", sessionData.session.user.id)
+          .eq("provider", "gemini")
+          .maybeSingle(),
+        supabase
+          .from("ai_analyses")
+          .select("result,created_at")
+          .eq("application_id", applicationId)
+          .eq("analysis_type", "cv_job_match")
+          .is("deleted_at", null)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+      ]);
+      if (!active) return;
+      setConsented(Boolean(consent && !consent.revoked_at && consent.policy_version === policyVersion));
+      const result = saved?.result;
+      if (isMatchAnalysis(result) && saved?.created_at) setSavedAnalysis({ ...result, createdAt: saved.created_at });
     }
-    void loadConsent();
+    void loadPanelData();
     return () => { active = false; };
-  }, []);
+  }, [applicationId]);
 
   async function grantConsent() {
     setBusy("consent");
@@ -128,7 +145,11 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
       result: analysis,
     });
     if (saveError) setError("Nie udało się zapisać analizy.");
-    else setMessage("Analiza została zapisana przy tej aplikacji.");
+    else {
+      setSavedAnalysis({ ...analysis, createdAt: new Date().toISOString() });
+      setAnalysis(null);
+      setMessage("Analiza została zapisana przy tej aplikacji.");
+    }
     setBusy(null);
   }
 
@@ -190,11 +211,20 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
 
       {analysis ? (
         <article className="mt-5 rounded-xl border border-[#dfe7dc] bg-white p-5">
-          <div className="flex items-center justify-between gap-3"><h3 className="font-semibold">Dopasowanie CV do oferty</h3><span className="rounded-full bg-[#edf4eb] px-3 py-1 text-sm font-semibold text-[#315b3a]">{analysis.score}/100</span></div>
+          <div className="flex items-center justify-between gap-3"><h3 className="font-semibold">Bieżąca analiza CV do oferty</h3><span className="rounded-full bg-[#edf4eb] px-3 py-1 text-sm font-semibold text-[#315b3a]">{analysis.score}/100</span></div>
           <AnalysisList label="Mocne strony" items={analysis.strengths} />
           <AnalysisList label="Braki lub ryzyka" items={analysis.gaps} />
           <AnalysisList label="Rekomendacje" items={analysis.recommendations} />
           <button className="mt-4 rounded-xl border border-[#2d5034] px-4 py-3 text-sm font-semibold text-[#294b30] disabled:opacity-60" disabled={busy === "save-analysis"} onClick={() => void saveAnalysis()} type="button">{busy === "save-analysis" ? "Zapisywanie…" : "Zapisz analizę"}</button>
+        </article>
+      ) : null}
+
+      {savedAnalysis ? (
+        <article className="mt-5 rounded-xl border border-[#cfe1cc] bg-[#f7fbf5] p-5">
+          <div className="flex items-center justify-between gap-3"><div><h3 className="font-semibold">Ostatnio zapisana analiza</h3><p className="mt-1 text-xs text-[#687167]">Zapisana: {new Intl.DateTimeFormat("pl-PL", { dateStyle: "medium", timeStyle: "short" }).format(new Date(savedAnalysis.createdAt))}</p></div><span className="rounded-full bg-[#e0efdd] px-3 py-1 text-sm font-semibold text-[#315b3a]">{savedAnalysis.score}/100</span></div>
+          <AnalysisList label="Mocne strony" items={savedAnalysis.strengths} />
+          <AnalysisList label="Braki lub ryzyka" items={savedAnalysis.gaps} />
+          <AnalysisList label="Rekomendacje" items={savedAnalysis.recommendations} />
         </article>
       ) : null}
 
@@ -212,4 +242,13 @@ export function ApplicationAiPanel({ applicationId, cvVersionId }: { application
 function AnalysisList({ label, items }: { label: string; items: string[] }) {
   if (items.length === 0) return null;
   return <div className="mt-4"><h4 className="text-sm font-semibold">{label}</h4><ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[#4d564c]">{items.map((item) => <li key={item}>{item}</li>)}</ul></div>;
+}
+
+function isMatchAnalysis(value: unknown): value is MatchAnalysis {
+  if (!value || typeof value !== "object") return false;
+  const candidate = value as Partial<MatchAnalysis>;
+  return typeof candidate.score === "number"
+    && Array.isArray(candidate.strengths)
+    && Array.isArray(candidate.gaps)
+    && Array.isArray(candidate.recommendations);
 }
