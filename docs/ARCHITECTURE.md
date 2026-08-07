@@ -31,6 +31,9 @@ Kod może współdzielić modele domenowe, schematy walidacji i komponenty preze
 
 ## Jobilot AI Cloud
 
+- Docelowym dostawcą analizy CV, analizy oferty i generatora listu motywacyjnego jest OpenAI. W bezpłatnym wdrożeniu MVP tymczasowo używamy `gemini-3-flash-preview` w Gemini API Free Tier.
+- AI Gateway korzysta z kontraktu dostawcy. Ekrany, zgody, limity, modele domenowe i zapis wyników nie zależą od Gemini ani OpenAI, więc późniejsza zmiana dostawcy nie wymaga przebudowy aplikacji.
+- Free Tier Gemini może wykorzystywać przesyłaną treść do ulepszania produktów Google. Ta informacja musi być widoczna przed wyrażeniem zgody AI; użytkownik decyduje, czy wysłać dane.
 - Aplikacja Next.js dostępna przez HTTPS, wdrażana z GitHuba na Vercel.
 - Gałąź `main` wdraża produkcję; gałęzie funkcjonalne otrzymują Preview Deployment.
 - Supabase realizuje konta, relacyjną bazę danych, RLS i prywatny storage plików.
@@ -72,4 +75,5 @@ Projekt działa w modelu **zero kosztów bez osobnej zgody właściciela**.
 - `AI_GLOBAL_ENABLED=false` jest bezpieczną wartością domyślną dla każdego środowiska.
 - Klucze OpenAI i Gemini nie są dodawane do Vercel ani `.env.local` bez osobnej zgody właściciela.
 - Przed pierwszym użyciem płatnego API ustalamy limit finansowy, limit operacji na użytkownika oraz mechanizm zatrzymania po przekroczeniu budżetu.
+- Wersja MVP korzysta wyłącznie z Gemini Free Tier; `AI_GLOBAL_ENABLED` pozostaje wyłączone do czasu ręcznego dodania sekretu w Vercel i ukończenia zgody AI w interfejsie.
 - Local Vault nie korzysta z płatnych ani zewnętrznych usług.

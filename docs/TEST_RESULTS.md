@@ -1,5 +1,36 @@
 # Wyniki testów — Jobilot AI
 
+## Sprint 5 — AI Gateway (test przed pull requestem)
+
+- Status: IN PROGRESS.
+- Migracja `20260807190000_add_ai_usage_functions.sql` została zastosowana w Supabase.
+- Sekret `GEMINI_API_KEY` jest skonfigurowany w Vercel i nie znajduje się w repozytorium.
+- Plan przypadków testowych: `docs/TESTING.md`, pozycje `AI-01` do `AI-08`.
+
+### 7 sierpnia 2026 — kontrola automatyczna i Vercel Preview
+
+| ID | Środowisko | Status | Wynik |
+| --- | --- | --- | --- |
+| BUILD-12 | LOCAL | PASS | `npm run lint` zakończył się bez błędów. |
+| BUILD-13 | LOCAL | PASS | Pełny `npm run build`, kontrola TypeScript i generowanie tras, w tym `/api/ai/generate`, zakończyły się kodem 0. |
+| PREVIEW-01 | PREVIEW | PASS | Wdrożenie Preview osiągnęło status `Ready`; strona `/login` zwraca HTTP 200. Produkcja nie została zmieniona. |
+| AI-CONFIG-01 | PREVIEW | FAIL → PASS | Pierwsze wdrożenie nie widziało zmiennej dodanej po buildzie i zwracało 503. Po ponownym wdrożeniu Preview endpoint AI bez sesji zwraca prawidłowe HTTP 401. |
+| AI-01 | PREVIEW | PASS | Po otwarciu Application użytkownik zobaczył sekcję AI, dostawcę i wariant modelu, zakres przesyłanych danych, informację o Free Tier, ostrzeżenie o błędach AI oraz przycisk świadomej zgody. Przed zgodą nie można uruchomić analizy. |
+| AI-02 | PREVIEW | PASS | Świadoma zgoda zapisała się prawidłowo. Interfejs pokazał komunikat sukcesu, akcje analizy, generowania listu i wycofania zgody oraz informację o braku automatycznego zapisu wyników. Przycisk wycofania zgody poprawiono na osobny kafelek ostrzegawczy. |
+| AI-04 | PREVIEW | PASS | Po poprawkach limitu, timeoutu i struktury `generateContent` Gemini zwróciło analizę z oceną `25/100`, sekcjami mocnych stron, braków i rekomendacji oraz informacją o pozostałych operacjach. Niezapisany wynik zniknął po odświeżeniu. Końcowy test zgodności licznika Jobilot z panelem Gemini wykonamy podczas finalnej walidacji MVP. |
+| AI-03 | PREVIEW | PASS | Przycisk świadomego zapisu działa. Zapis potwierdzono komunikatem sukcesu; „Ostatnio zapisana analiza” z wynikiem, datą i godziną jest widoczna także po odświeżeniu. Nie zapisujemy promptu ani historii rozmowy. |
+| AI-05 | PREVIEW | PASS | Gemini wygenerowało edytowalny list motywacyjny. Użytkownik zmienił treść, zapisał ją świadomie i otrzymał komunikat sukcesu. „Ostatnio zapisany list motywacyjny” pozostaje widoczny po odświeżeniu. Późniejsza edycja zapisanej wersji, zapis aktualizacji oraz trwałość zmienionej treści po odświeżeniu zostały potwierdzone bez nowego użycia AI i bez tworzenia duplikatu. |
+| AI-06 | PREVIEW | PASS | Wycofanie zgody ukryło akcje analizy i generowania oraz przywróciło ekran świadomej zgody. Stan pozostał wycofany po odświeżeniu. Zapisane wcześniej analiza i list motywacyjny pozostały dostępne lokalnie w Application, bez uruchamiania AI i bez wysyłania danych do Gemini. |
+| AI-07 | PREVIEW | PASS | Po nadaniu zgody pięć kolejnych udanych operacji zmniejszyło licznik z 4 do 0. Kolejna próba wyświetliła komunikat „Wykorzystano dzienny limit 10 operacji AI.” i nie zwróciła nowego wyniku. Podczas testu nie było błędów; licznik użycia w panelu Gemini nie zwiększył się po zablokowanych próbach, co potwierdza blokadę przed wysłaniem danych do dostawcy. |
+| AI-08 | PREVIEW | PASS | Network pokazał dokładnie jedno żądanie `fetch` do własnego endpointu Jobilot `/api/ai/generate` ze statusem 429; nie było żądań do `generativelanguage.googleapis.com`, `googleapis.com` ani adresów Gemini. Ręczne otwarcie adresu endpointu w karcie zwróciło 405 dla `GET`, co jest oczekiwane — gateway obsługuje wyłącznie `POST`. |
+
+## Sprint 6 — jakość i prezentacja (przed pull requestem)
+
+| ID | Środowisko | Status | Wynik |
+| --- | --- | --- | --- |
+| QA-01 | LOCAL | PASS | `npm.cmd run lint`, `npx.cmd tsc --noEmit` oraz produkcyjny `npx.cmd next build` dla `apps/cloud` zakończyły się poprawnie. Build utworzył artefakt `.next/BUILD_ID`. |
+| QA-02 | LOCAL | PASS | Kontrola śledzonych przez Git plików konfiguracji wykazała wyłącznie szablon `.env.example`; wyszukiwanie typowych wzorców kluczy Gemini, OpenAI i Supabase nie znalazło sekretów poza wartościami zastępczymi. |
+
 ## Konwencja
 
 - `PASS` — wynik zgodny z kryterium.

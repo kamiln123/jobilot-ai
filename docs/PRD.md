@@ -1,7 +1,7 @@
 # PRD — Jobilot AI
 
-**Wersja:** 0.3
-**Data:** 5 sierpnia 2026
+**Wersja:** 0.5
+**Data:** 7 sierpnia 2026
 **Termin MVP:** 8 sierpnia 2026
 **Status:** MVP w realizacji
 
@@ -25,6 +25,12 @@ MVP uznajemy za gotowe, gdy użytkownik potrafi w wybranym trybie utworzyć ofer
 - AI: analiza CV względem oferty i generowanie Cover Letter.
 - Jednorazowa zgoda AI, informacja o dostawcy i możliwość rezygnacji.
 - Dzienne limity i walidacja zapytań AI.
+
+### Tymczasowy dostawca AI w MVP
+
+Docelowo analiza CV, porównanie CV z ofertą i generowanie Cover Letter będą wykonywane przez OpenAI za pośrednictwem AI Gateway. Aby wykonać bezpłatne wdrożenie i prezentację MVP bez aktywowania rozliczeń OpenAI, aktualną implementacją dostawcy jest `gemini-3-flash-preview` w Gemini API Free Tier.
+
+Free Tier Gemini może wykorzystywać przesyłaną treść do ulepszania produktów Google. Przed pierwszą operacją AI interfejs musi podać nazwę dostawcy, cel, zakres wysyłanych danych, to ograniczenie prywatności oraz umożliwić odmowę. Nie należy wysyłać danych, jeśli użytkownik nie wyraził tej zgody.
 
 ### Local Vault Mode
 
@@ -121,5 +127,6 @@ Snapshot CV w Application zawiera co najmniej: `cv_version_id`, nazwę pliku, nu
 ## 9. Otwarte decyzje implementacyjne
 
 - Limit darmowy: domyślnie 10 operacji AI dziennie; można zmienić konfiguracją serwera.
+- Tymczasowy model MVP: `gemini-3-flash-preview` w Gemini API Free Tier. Dostawca docelowy: OpenAI. Zamiana jest realizowana przez adapter AI Gateway, bez zmiany ekranów, zgód, limitów ani modelu danych.
 - MVP: CV tylko w PDF, maksymalnie 5 MB. W 1.1 planujemy `.docx`, pod warunkiem walidacji MIME, rozszerzenia, limitu rozmiaru i bezpiecznego przetwarzania pliku.
-- Local Vault MVP korzysta z IndexedDB; model szyfrowania lokalnego backupu zostaje odłożony do 1.1.
+- Local Vault MVP korzysta z lokalnej bazy SQLite i prywatnego katalogu aplikacji dla kopii PDF; model szyfrowania lokalnego backupu zostaje odłożony do 1.1.

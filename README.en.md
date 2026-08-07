@@ -14,7 +14,7 @@ By 8 August 2026, Jobilot AI will deliver two portfolio products: the Jobilot AI
 - Supabase (Auth, PostgreSQL, Storage, Row Level Security) for Cloud
 - Tauri + React/TypeScript + SQLite for the Local Vault desktop app
 - Zod and React Hook Form for validation
-- Next.js Route Handlers as an AI Gateway for OpenAI
+- Next.js Route Handlers as an AI Gateway; Gemini Free Tier temporarily for the MVP, OpenAI as the target provider
 - Vitest and Playwright for testing
 
 ## MVP features
@@ -54,4 +54,4 @@ By 8 August 2026, Jobilot AI will deliver two portfolio products: the Jobilot AI
 
 ## Status
 
-Product definition and documentation phase. Implementation will start with the application foundation, data model, and security controls for both Cloud Mode and Local Vault Mode.
+The core MVP implementation is complete in both Cloud Mode and Local Vault. Cloud AI temporarily uses `gemini-3-flash-preview` in the Free Tier—the UI states the data scope and warns that Google may use submitted content to improve its products. OpenAI remains the intended provider behind the same AI Gateway. Final quality, access-control, and limit tests are in progress before a pull request and production deployment.
