@@ -24,6 +24,9 @@ export function SiteFooter() {
           <span>© 2026 Jobilot AI</span>
         </div>
       </div>
+      <p className="mx-auto mt-5 max-w-[1540px] border-t border-[#38533d] pt-4 text-center text-xs text-[#c7d8c5]">
+        Wersja demonstracyjna projektu portfolio — używaj wyłącznie danych testowych.
+      </p>
     </footer>
   );
 }
