@@ -29,12 +29,12 @@ export default function AboutPage() {
         </section>
 
         <section className="mt-7 grid gap-7 md:grid-cols-2">
-          <article className="rounded-2xl border border-[#c5d6c2] bg-[#f1f6ee] p-6 shadow-sm">
+          <article className="rounded-2xl border border-[#c9d8c6] bg-[#eef4eb] p-6 shadow-sm">
             <p className="text-sm font-semibold text-[#5e7863]">Cloud Mode</p>
             <h2 className="mt-2 text-xl font-semibold">Wygodna praca w chmurze</h2>
-            <p className="mt-3 text-sm leading-6 text-[#566054]">Konto, prywatne dane użytkownika, biblioteka CV, oferty, portfolio i aplikacje rekrutacyjne. Wgląd do Twoich aplikacji jest możliwy w każdym czasie i z każdego miejsca. Funkcje AI są opcjonalne i wymagają świadomej zgody.</p>
+            <p className="mt-3 text-sm leading-6 text-[#566054]">Prywatne konto użytkownika, biblioteka CV, oferty, portfolio i aplikacje rekrutacyjne. Wgląd do Twoich aplikacji jest możliwy w każdym momencie i z każdego miejsca. Funkcje AI są opcjonalne i wymagają świadomej zgody.</p>
           </article>
-          <article className="rounded-2xl border border-[#b9d0b5] bg-[#e7f0e4] p-6 shadow-sm">
+          <article className="rounded-2xl border border-[#c9d8c6] bg-[#eef4eb] p-6 shadow-sm">
             <p className="text-sm font-semibold text-[#5e7863]">Local Vault</p>
             <h2 className="mt-2 text-xl font-semibold">Lokalny sejf danych</h2>
             <p className="mt-3 text-sm leading-6 text-[#566054]">Oddzielna aplikacja Windows bez konta, synchronizacji, telemetrii i funkcji AI. Dane pozostają w prywatnym katalogu aplikacji na urządzeniu.</p>
@@ -42,12 +42,12 @@ export default function AboutPage() {
           </article>
         </section>
 
-        <section className="mt-7 rounded-2xl border border-[#d4ded0] bg-[#f9fbf7] p-6 sm:p-8">
+        <section className="mt-7 rounded-2xl border border-[#c9d8c6] bg-[#eef4eb] p-6 sm:p-8">
           <h2 className="text-xl font-semibold">Prywatność i odpowiedzialne AI</h2>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-[#687167]">Wyniki AI nie są zapisywane automatycznie. W Cloud Mode użytkownik decyduje, czy zapisać końcową analizę albo list motywacyjny. Aktualny wariant MVP korzysta z Gemini Free Tier wyłącznie po wyrażeniu zgody; dostawca może wykorzystywać przesłaną treść do ulepszania swoich produktów.</p>
         </section>
 
-        <section className="mt-7 rounded-2xl border border-[#d4ded0] bg-[#f9fbf7] p-6 text-sm text-[#687167] sm:p-8">
+        <section className="mt-7 rounded-2xl border border-[#c9d8c6] bg-[#eef4eb] p-6 text-sm text-[#687167] sm:p-8">
           <h2 className="font-semibold text-[#2f4031]">Autor</h2>
           <p className="mt-2">{PRODUCT_AUTHOR}</p>
           <a className="mt-3 inline-flex font-semibold text-[#456a4b] hover:text-[#294b30]" href={PRODUCT_GITHUB_URL} rel="noreferrer" target="_blank">GitHub ↗</a>
