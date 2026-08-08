@@ -124,12 +124,12 @@ export default function CvLibraryPage() {
                 </div>
                 <ul className="mt-5 divide-y divide-[#edf0e9]">
                   {[...document.cv_versions].sort((first, second) => second.version_number - first.version_number).map((version) => (
-                    <li className="flex items-center justify-between gap-4 py-3" key={version.id}>
-                      <div>
-                        <p className="text-sm font-medium">v{version.version_number} · {version.original_file_name}</p>
+                    <li className="grid gap-3 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center" key={version.id}>
+                      <div className="min-w-0">
+                        <p className="break-words text-sm font-medium">v{version.version_number} · {version.original_file_name}</p>
                         <p className="mt-1 text-xs text-[#8b908a]">{formatBytes(version.byte_size)}</p>
                       </div>
-                      <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center">
+                      <div className="flex flex-wrap items-center justify-between gap-2 sm:justify-end">
                         <time className="text-xs text-[#8b908a]">{new Intl.DateTimeFormat("pl-PL", { day: "numeric", month: "short", year: "numeric" }).format(new Date(version.created_at))}</time>
                         <button className="rounded-lg border border-[#c9d8c6] bg-[#eef4eb] px-3 py-2 text-xs font-semibold text-[#315b3a] hover:bg-[#dce9dc] disabled:cursor-not-allowed disabled:opacity-60" disabled={downloadingVersionId === version.id} onClick={() => void downloadVersion(version)} type="button">{downloadingVersionId === version.id ? "Przygotowywanie..." : "Pobierz PDF"}</button>
                       </div>
