@@ -116,14 +116,14 @@ export default function PortfolioPage() {
 
         <form className="mt-8 grid gap-4 rounded-2xl border border-[#e5e7e0] bg-white p-5 sm:grid-cols-2" onSubmit={submit}>
           {error ? <p className="sm:col-span-2 text-sm text-red-700">{error}</p> : null}
-          <input className="rounded-xl border p-3" onChange={(event) => setTitle(event.target.value)} placeholder="Tytuł *" value={title} />
-          <select className="rounded-xl border p-3" onChange={(event) => setType(event.target.value)} value={type}>
+          <input className="rounded-xl border border-[#dfe3da] p-3" onChange={(event) => setTitle(event.target.value)} placeholder="Tytuł *" value={title} />
+          <select className="rounded-xl border border-[#dfe3da] p-3" onChange={(event) => setType(event.target.value)} value={type}>
             <option value="link">Link</option>
             <option value="case_study">Case study</option>
             <option value="presentation">Prezentacja</option>
           </select>
-          <input className="rounded-xl border p-3 sm:col-span-2" onChange={(event) => setUrl(event.target.value)} placeholder="https://... *" value={url} />
-          <textarea className="rounded-xl border p-3 sm:col-span-2" onChange={(event) => setDescription(event.target.value)} placeholder="Opis (opcjonalnie)" value={description} />
+          <input className="rounded-xl border border-[#dfe3da] p-3 sm:col-span-2" onChange={(event) => setUrl(event.target.value)} placeholder="https://... *" value={url} />
+          <textarea className="rounded-xl border border-[#dfe3da] p-3 sm:col-span-2" onChange={(event) => setDescription(event.target.value)} placeholder="Opis (opcjonalnie)" value={description} />
           <button className="rounded-xl bg-[#2d5034] p-3 font-semibold text-white sm:col-span-2">Zapisz element portfolio</button>
         </form>
 
