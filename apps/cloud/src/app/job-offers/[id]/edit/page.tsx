@@ -158,7 +158,7 @@ export default function EditJobOfferPage() {
 
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-5xl">
         <div className="mt-5 sm:mt-12">
           <p className="text-sm font-medium text-[#6c8b70]">Edycja oferty</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Edytuj ofertę pracy</h1>

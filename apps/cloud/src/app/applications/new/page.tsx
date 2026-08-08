@@ -115,9 +115,9 @@ export default function NewApplicationPage() {
 
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8">
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-5xl">
         <h1 className="mt-5 text-3xl font-semibold sm:mt-12">Utwórz aplikację</h1>
-        <p className="mt-2 text-sm text-[#687167]">Zapis zostanie wykonany atomowo: oferta, snapshot CV i portfolio powstaną razem albo wcale.</p>
+        <p className="mt-2 text-sm text-[#687167]">Połącz ofertę pracy z CV i portfolio.</p>
 
         {loading ? <p className="mt-8 text-sm text-[#687167]">Ładowanie dostępnych ofert i dokumentów...</p> : null}
         {!loading ? (
