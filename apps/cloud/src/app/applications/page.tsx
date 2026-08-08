@@ -89,7 +89,7 @@ export default function ApplicationsPage() {
           <div>
             <p className="text-sm font-medium text-[#6c8b70]">Cloud Mode</p>
             <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Aplikacje</h1>
-            <p className="mt-2 text-sm text-[#687167]">Każda pozycja łączy ofertę, konkretny snapshot CV i wybrane portfolio.</p>
+            <p className="mt-2 text-sm text-[#687167]">Każda pozycja łączy ofertę, konkretną wersję CV i wybrane portfolio.</p>
           </div>
           <Link className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#2d5034] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#203d27]" href="/applications/new">
             + Utwórz aplikację

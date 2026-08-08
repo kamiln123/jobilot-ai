@@ -114,7 +114,7 @@ export default function PortfolioPage() {
           <p className="mt-2 text-sm text-[#687167]">Zapisuj linki i materiały, które chcesz przypisać do aplikacji rekrutacyjnej.</p>
         </section>
 
-        <form className="mt-8 grid gap-4 rounded-2xl border bg-white p-5 sm:grid-cols-2" onSubmit={submit}>
+        <form className="mt-8 grid gap-4 rounded-2xl border border-[#e5e7e0] bg-white p-5 sm:grid-cols-2" onSubmit={submit}>
           {error ? <p className="sm:col-span-2 text-sm text-red-700">{error}</p> : null}
           <input className="rounded-xl border p-3" onChange={(event) => setTitle(event.target.value)} placeholder="Tytuł *" value={title} />
           <select className="rounded-xl border p-3" onChange={(event) => setType(event.target.value)} value={type}>
@@ -131,7 +131,7 @@ export default function PortfolioPage() {
           {items.map((item) => {
             const itemUrl = safeHttpUrl(item.url);
             return (
-              <article className="rounded-2xl border bg-white p-5" key={item.id}>
+              <article className="rounded-2xl border border-[#e5e7e0] bg-white p-5" key={item.id}>
                 <p className="font-semibold">{item.title}</p>
                 {itemUrl ? (
                   <a className="mt-2 inline-block max-w-full break-all text-sm text-[#456a4b]" href={itemUrl} rel="noreferrer" target="_blank">

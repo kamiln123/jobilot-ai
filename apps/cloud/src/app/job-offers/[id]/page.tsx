@@ -90,6 +90,7 @@ export default function JobOfferDetailPage() {
             {offer.employment_type ? <span className="rounded-full bg-[#f0f3ed] px-3 py-1.5">{offer.employment_type}</span> : null}
           </div>
           <p className="mt-6 text-xs text-[#8b908a]">Dodano {formatDate(offer.created_at)}</p>
+          <Link className="mt-5 inline-flex min-h-11 items-center rounded-xl border border-[#c9d8c6] bg-[#eef4eb] px-4 py-2 text-sm font-semibold text-[#315b3a] hover:bg-[#dce9dc]" href={`/job-offers/${id}/edit`}>Edytuj ofertę</Link>
         </section>
 
         <div className="mt-7 grid gap-7 lg:grid-cols-[minmax(0,1fr)_280px]">

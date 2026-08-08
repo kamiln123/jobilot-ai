@@ -64,7 +64,7 @@ export default function JobOffersPage() {
       <div className="mx-auto max-w-5xl">
         <div className="mt-5 flex flex-col justify-between gap-5 sm:mt-12 sm:flex-row sm:items-end">
           <div><p className="text-sm font-medium text-[#6c8b70]">Cloud Mode</p><h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Oferty pracy</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-[#6c716b]">Zapisuj ręcznie oferty znalezione na dowolnym portalu. Nie pobieramy ich automatycznie.</p></div>
-          <Link className="inline-flex items-center justify-center rounded-xl bg-[#2d5034] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#203d27]" href="/job-offers/new">+ Dodaj ofertę</Link>
+          <Link className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#2d5034] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#203d27]" href="/job-offers/new">+ Dodaj ofertę</Link>
         </div>
 
         {state === "loading" ? <p className="mt-10 text-sm text-[#6c716b]">Ładowanie ofert...</p> : null}

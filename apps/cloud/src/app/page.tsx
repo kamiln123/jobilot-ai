@@ -116,7 +116,7 @@ export default function Home() {
         </header>
 
         <div className="mt-12">
-          <p className="text-sm font-medium text-[#6c8b70]">Cloud Mode · bezpieczna sesja</p>
+          <p className="text-sm font-medium text-[#6c8b70]">Cloud Mode</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Dzień dobry, {displayName}.</h1>
           <p className="mt-2 max-w-xl text-sm leading-6 text-[#6c716b]">Pulpit korzysta z zabezpieczeń Supabase RLS: widzisz wyłącznie własne dane.</p>
         </div>
@@ -126,14 +126,11 @@ export default function Home() {
           <StatCard label="Dokumenty CV" value={String(state.cvCount)} />
           <StatCard label="Portfolio" value={String(state.portfolioCount)} />
           <StatCard label="AI" note="Włączane osobno po świadomej zgodzie w wybranej aplikacji na ofertę pracy" value="Opcjonalne" />
-        </section>
-
-        <section className="mt-8 rounded-2xl border border-[#e5e7e0] bg-white p-6 sm:p-8">
-          <h2 className="text-xl font-semibold tracking-tight">Zarządzaj aplikacjami</h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6c716b]">
-            Połącz własną ofertę, konkretną wersję CV i wybrane portfolio w jedną aplikację rekrutacyjną. Decyzja o aplikowaniu zawsze pozostaje po Twojej stronie.
-          </p>
-          <Link className="mt-5 inline-flex rounded-xl bg-[#2d5034] px-4 py-3 text-sm font-semibold text-white hover:bg-[#203d27]" href="/applications">Przejdź do aplikacji</Link>
+          <section className="rounded-2xl border border-[#e5e7e0] bg-white p-5">
+            <h2 className="text-sm font-semibold text-[#456a4b]">Zarządzaj aplikacjami</h2>
+            <p className="mt-2 text-xs leading-5 text-[#6c716b]">Połącz ofertę, wersję CV i portfolio w jedną aplikację rekrutacyjną.</p>
+            <Link className="mt-4 inline-flex min-h-10 items-center rounded-xl bg-[#2d5034] px-4 py-2 text-sm font-semibold text-white hover:bg-[#203d27]" href="/applications">Przejdź do aplikacji</Link>
+          </section>
         </section>
       </section>
     </main>
