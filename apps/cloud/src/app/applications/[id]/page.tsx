@@ -51,16 +51,6 @@ const statuses = [
 ] as const;
 const statusLabel = (value: string | null) => statuses.find(([key]) => key === value)?.[1] ?? value ?? "—";
 
-function safeHttpUrl(value: string | null) {
-  if (!value) return null;
-  try {
-    const url = new URL(value);
-    return ["https:", "http:"].includes(url.protocol) ? url.toString() : null;
-  } catch {
-    return null;
-  }
-}
-
 export default function ApplicationDetailsPage() {
   const router = useRouter();
   const params = useParams<{ id: string }>();
@@ -187,7 +177,6 @@ export default function ApplicationDetailsPage() {
   if (state === "error" || !application) return <main className="grid min-h-screen place-items-center bg-[#f7f7f4] p-6 text-[#20241f]"><section className="max-w-md rounded-2xl bg-white p-6 text-center"><h1 className="text-xl font-semibold">Nie udało się wczytać aplikacji</h1><p className="mt-2 text-sm text-[#687167]">Odśwież stronę i spróbuj ponownie.</p><Link className="mt-5 inline-flex text-sm font-semibold text-[#456a4b]" href="/applications">Wróć do aplikacji</Link></section></main>;
 
   const jobOffer = application.jobOffer;
-  const sourceUrl = safeHttpUrl(jobOffer?.source_url ?? null);
 
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
@@ -247,7 +236,7 @@ export default function ApplicationDetailsPage() {
             <DetailRow label="Opis oferty" value={jobOffer?.description ?? null} wide />
             <DetailRow label="Wymagania" value={jobOffer?.requirements ?? null} wide />
             <DetailRow label="Prywatna notatka" value={jobOffer?.notes ?? null} wide />
-            <div className="sm:col-span-2"><dt className="text-xs font-medium uppercase tracking-wide text-[#8b908a]">Źródło</dt>{sourceUrl ? <dd className="mt-2"><a className="break-all text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href={sourceUrl} rel="noreferrer" target="_blank">{sourceUrl}</a></dd> : jobOffer?.source_url ? <dd className="mt-2 break-all text-sm text-[#626b61]">{jobOffer.source_url}</dd> : <dd className="mt-2 text-sm text-[#8b908a]">Nie podano</dd>}</div>
+            <div className="sm:col-span-2"><dt className="text-xs font-medium uppercase tracking-wide text-[#8b908a]">Źródło</dt>{jobOffer?.source_url ? <dd className="mt-2 break-all text-sm text-[#626b61]">{jobOffer.source_url}</dd> : <dd className="mt-2 text-sm text-[#8b908a]">Nie podano</dd>}</div>
           </dl>
         </section>
 
