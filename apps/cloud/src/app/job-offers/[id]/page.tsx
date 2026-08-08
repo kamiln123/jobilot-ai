@@ -76,8 +76,6 @@ export default function JobOfferDetailPage() {
   if (state === "not-found") return <MessagePage title="Nie znaleziono oferty" text="Oferta nie istnieje, została zarchiwizowana lub nie masz do niej dostępu." />;
   if (state === "error" || !offer) return <MessagePage title="Nie udało się wczytać oferty" text="Odśwież stronę i spróbuj ponownie." />;
 
-  const safeSourceUrl = getSafeSourceUrl(offer.source_url);
-
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-5xl">
@@ -112,14 +110,7 @@ export default function JobOfferDetailPage() {
             </section>
             <section className="rounded-2xl border border-[#e5e7e0] bg-white p-5">
               <h2 className="font-semibold">Źródło</h2>
-              {offer.source_url ? safeSourceUrl ? (
-                <a className="mt-3 block break-all text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href={safeSourceUrl} rel="noreferrer" target="_blank">{offer.source_url} ↗</a>
-              ) : (
-                <>
-                  <p className="mt-3 break-all text-sm text-[#626b61]">{offer.source_url}</p>
-                  <p className="mt-2 text-xs leading-5 text-[#8a611a]">Ten zapis nie jest klikalny, ponieważ nie ma bezpiecznego adresu HTTP(S).</p>
-                </>
-              ) : <p className="mt-3 text-sm text-[#7b8179]">Nie dodano linku źródłowego.</p>}
+              {offer.source_url ? <p className="mt-3 break-all text-sm text-[#626b61]">{offer.source_url}</p> : <p className="mt-3 text-sm text-[#7b8179]">Nie dodano linku źródłowego.</p>}
             </section>
           </aside>
         </div>
@@ -153,14 +144,4 @@ function formatSalary(offer: JobOfferDetail) {
   const currency = offer.salary_currency ? ` ${offer.salary_currency}` : "";
   if (offer.salary_min !== null && offer.salary_max !== null) return `${offer.salary_min}–${offer.salary_max}${currency}`;
   return offer.salary_min !== null ? `od ${offer.salary_min}${currency}` : `do ${offer.salary_max}${currency}`;
-}
-
-function getSafeSourceUrl(value: string | null) {
-  if (!value) return null;
-  try {
-    const url = new URL(value);
-    return url.protocol === "https:" || url.protocol === "http:" ? url.toString() : null;
-  } catch {
-    return null;
-  }
 }
