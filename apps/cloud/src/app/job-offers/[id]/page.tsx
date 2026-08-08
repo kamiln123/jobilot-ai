@@ -81,6 +81,7 @@ export default function JobOfferDetailPage() {
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-5xl">
+        <Link className="inline-flex text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href="/job-offers">← Oferty pracy</Link>
         <section className="mt-5 rounded-2xl border border-[#e5e7e0] bg-white p-6 sm:mt-12 sm:p-9">
           <p className="text-sm font-medium text-[#6c8b70]">{offer.company_name}</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">{offer.position_title}</h1>

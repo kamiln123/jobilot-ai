@@ -22,7 +22,20 @@ type Application = {
   job_offer_id: string;
   jobOffer?: JobOffer;
 };
-type JobOffer = { company_name: string; position_title: string; location: string | null; source_url: string | null };
+type JobOffer = {
+  company_name: string;
+  position_title: string;
+  description: string | null;
+  requirements: string | null;
+  location: string | null;
+  work_mode: "remote" | "hybrid" | "onsite" | null;
+  employment_type: string | null;
+  salary_min: number | null;
+  salary_max: number | null;
+  salary_currency: string | null;
+  source_url: string | null;
+  notes: string | null;
+};
 type HistoryItem = { id: string; previous_status: string | null; new_status: string; changed_at: string; note: string | null };
 type Note = { id: string; content: string; created_at: string };
 type PortfolioItem = { id: string; title: string; url: string | null; artifact_type: string };
@@ -104,7 +117,7 @@ export default function ApplicationDetailsPage() {
     ]);
     const portfolioRelations = portfolioResult.error ? [] : portfolioResult.data ?? [];
     const [jobOfferResult, portfolioItemsResult] = await Promise.all([
-      supabase.from("job_offers").select("company_name,position_title,location,source_url").eq("id", baseApplication.job_offer_id).maybeSingle(),
+      supabase.from("job_offers").select("company_name,position_title,description,requirements,location,work_mode,employment_type,salary_min,salary_max,salary_currency,source_url,notes").eq("id", baseApplication.job_offer_id).maybeSingle(),
       portfolioRelations.length === 0
         ? Promise.resolve({ data: [], error: null })
         : supabase.from("portfolio_artifacts").select("id,title,url,artifact_type").in("id", portfolioRelations.map((relation) => relation.portfolio_artifact_id)),
@@ -179,6 +192,7 @@ export default function ApplicationDetailsPage() {
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-5xl">
+        <Link className="inline-flex text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href="/applications">← Aplikacje</Link>
         <header className="mt-5 flex flex-wrap items-start justify-between gap-4 sm:mt-12">
           <div>
             <h1 className="mt-2 text-3xl font-semibold tracking-tight">{jobOffer?.company_name ?? "Oferta niedostępna"}</h1>
@@ -188,16 +202,9 @@ export default function ApplicationDetailsPage() {
         </header>
         {error ? <p className="mt-6 rounded-xl bg-[#fff0ed] p-3 text-sm text-[#a63f2d]" role="alert">{error}</p> : null}
 
-        <section className="mt-8 grid gap-5 lg:grid-cols-2">
-          <article className="rounded-2xl border border-[#e5e7e0] bg-white p-6">
-            <h2 className="text-lg font-semibold">Wysłane CV — snapshot</h2>
-            <p className="mt-4 text-sm font-medium">{application.cv_file_name_snapshot}</p>
-            <p className="mt-1 text-sm text-[#687167]">Wersja v{application.cv_version_snapshot}</p>
-            <p className="mt-3 break-all text-xs text-[#8b908a]">Checksum: {application.cv_checksum_snapshot}</p>
-          </article>
-
-          <form className="rounded-2xl border border-[#e5e7e0] bg-white p-6" onSubmit={updateStatus}>
-            <h2 className="text-lg font-semibold">Status aplikacji</h2>
+        <section className="mt-8 rounded-2xl border border-[#e5e7e0] bg-white p-6">
+          <h2 className="text-lg font-semibold">Status i historia</h2>
+          <form className="mt-4" onSubmit={updateStatus}>
             <select className="mt-4 w-full rounded-xl border border-[#dfe3da] p-3" onChange={(event) => setSelectedStatus(event.target.value)} value={selectedStatus}>
               {statuses.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
             </select>
@@ -206,28 +213,45 @@ export default function ApplicationDetailsPage() {
             </button>
             {application.sent_at ? <p className="mt-3 text-xs text-[#687167]">Data wysłania: {formatDate(application.sent_at)}</p> : null}
           </form>
+          <ol className="mt-6 space-y-4 border-t border-[#edf0e9] pt-6">
+            {history.map((item) => <li className="border-l-2 border-[#c8dac5] pl-4" key={item.id}><p className="text-sm font-medium">{item.previous_status ? `${statusLabel(item.previous_status)} → ` : ""}{statusLabel(item.new_status)}</p><time className="mt-1 block text-xs text-[#8b908a]">{formatDate(item.changed_at)}</time></li>)}
+          </ol>
+        </section>
+
+        <section className="mt-5 grid gap-5 lg:grid-cols-2">
+          <article className="rounded-2xl border border-[#e5e7e0] bg-white p-6">
+            <h2 className="text-lg font-semibold">Wysłane CV</h2>
+            <p className="mt-4 text-sm font-medium">{application.cv_file_name_snapshot}</p>
+            <p className="mt-1 text-sm text-[#687167]">Wersja v{application.cv_version_snapshot}</p>
+            <p className="mt-3 break-all text-xs text-[#8b908a]">Checksum: {application.cv_checksum_snapshot}</p>
+          </article>
+
+          <article className="rounded-2xl border border-[#e5e7e0] bg-white p-6">
+            <h2 className="text-lg font-semibold">Portfolio</h2>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {portfolio.map((item) => <span className="rounded-full bg-[#edf4eb] px-3 py-1 text-sm text-[#315b3a]" key={item.id}>{item.title}</span>)}
+              {portfolio.length === 0 ? <p className="text-sm text-[#687167]">Nie przypisano portfolio.</p> : null}
+            </div>
+          </article>
         </section>
 
         <section className="mt-5 rounded-2xl border border-[#e5e7e0] bg-white p-6">
-          <h2 className="text-lg font-semibold">Oferta i portfolio</h2>
-          {jobOffer?.location ? <p className="mt-3 text-sm">Lokalizacja: {jobOffer.location}</p> : null}
-          {sourceUrl ? <a className="mt-3 inline-block break-all text-sm font-semibold text-[#456a4b]" href={sourceUrl} rel="noreferrer" target="_blank">Otwórz źródło oferty</a> : null}
-          <div className="mt-5 flex flex-wrap gap-2">
-            {portfolio.map((item) => <span className="rounded-full bg-[#edf4eb] px-3 py-1 text-sm text-[#315b3a]" key={item.id}>{item.title}</span>)}
-            {portfolio.length === 0 ? <p className="text-sm text-[#687167]">Nie przypisano portfolio.</p> : null}
-          </div>
+          <h2 className="text-lg font-semibold">Oferta pracy</h2>
+          <dl className="mt-5 grid gap-5 text-sm sm:grid-cols-2">
+            <DetailRow label="Lokalizacja" value={jobOffer?.location ?? null} />
+            <DetailRow label="Tryb pracy" value={jobOffer?.work_mode ? workModeLabel(jobOffer.work_mode) : null} />
+            <DetailRow label="Rodzaj umowy" value={jobOffer?.employment_type ?? null} />
+            <DetailRow label="Wynagrodzenie" value={jobOffer ? formatSalary(jobOffer) : null} />
+            <DetailRow label="Opis oferty" value={jobOffer?.description ?? null} wide />
+            <DetailRow label="Wymagania" value={jobOffer?.requirements ?? null} wide />
+            <DetailRow label="Prywatna notatka" value={jobOffer?.notes ?? null} wide />
+            <div className="sm:col-span-2"><dt className="text-xs font-medium uppercase tracking-wide text-[#8b908a]">Źródło</dt>{sourceUrl ? <dd className="mt-2"><a className="break-all text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href={sourceUrl} rel="noreferrer" target="_blank">{sourceUrl}</a></dd> : jobOffer?.source_url ? <dd className="mt-2 break-all text-sm text-[#626b61]">{jobOffer.source_url}</dd> : <dd className="mt-2 text-sm text-[#8b908a]">Nie podano</dd>}</div>
+          </dl>
         </section>
 
         <ApplicationAiPanel applicationId={application.id} cvVersionId={application.cv_version_id} />
 
-        <section className="mt-5 grid gap-5 lg:grid-cols-2">
-          <article className="rounded-2xl border border-[#e5e7e0] bg-white p-6">
-            <h2 className="text-lg font-semibold">Historia statusów</h2>
-            <ol className="mt-5 space-y-4">
-              {history.map((item) => <li className="border-l-2 border-[#c8dac5] pl-4" key={item.id}><p className="text-sm font-medium">{item.previous_status ? `${statusLabel(item.previous_status)} → ` : ""}{statusLabel(item.new_status)}</p><time className="mt-1 block text-xs text-[#8b908a]">{formatDate(item.changed_at)}</time></li>)}
-            </ol>
-          </article>
-
+        <section className="mt-5">
           <article className="rounded-2xl border border-[#e5e7e0] bg-white p-6">
             <h2 className="text-lg font-semibold">Notatki</h2>
             <form className="mt-4" onSubmit={addNote}>
@@ -247,4 +271,19 @@ export default function ApplicationDetailsPage() {
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("pl-PL", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+}
+
+function workModeLabel(value: JobOffer["work_mode"]) {
+  return value === "remote" ? "Zdalnie" : value === "hybrid" ? "Hybrydowo" : value === "onsite" ? "Stacjonarnie" : null;
+}
+
+function formatSalary(offer: JobOffer) {
+  if (offer.salary_min === null && offer.salary_max === null) return null;
+  const currency = offer.salary_currency ? ` ${offer.salary_currency}` : "";
+  if (offer.salary_min !== null && offer.salary_max !== null) return `${offer.salary_min}–${offer.salary_max}${currency}`;
+  return offer.salary_min !== null ? `od ${offer.salary_min}${currency}` : `do ${offer.salary_max}${currency}`;
+}
+
+function DetailRow({ label, value, wide = false }: { label: string; value: string | null; wide?: boolean }) {
+  return <div className={wide ? "sm:col-span-2" : undefined}><dt className="text-xs font-medium uppercase tracking-wide text-[#8b908a]">{label}</dt><dd className="mt-2 whitespace-pre-wrap leading-6 text-[#3d463d]">{value ?? "Nie podano"}</dd></div>;
 }

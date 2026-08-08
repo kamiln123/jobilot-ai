@@ -131,7 +131,6 @@ export default function NewJobOfferPage() {
         <div className="mt-5 sm:mt-12">
           <p className="text-sm font-medium text-[#6c8b70]">Ręczny zapis</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Dodaj ofertę pracy</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6c716b]">Pola oznaczone gwiazdką są wymagane. Oferta nie utworzy Application automatycznie.</p>
         </div>
 
         <form className="mt-8 space-y-7 rounded-2xl border border-[#e5e7e0] bg-white p-5 sm:p-8" noValidate onSubmit={handleSubmit}>

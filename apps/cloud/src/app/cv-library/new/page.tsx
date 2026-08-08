@@ -156,6 +156,7 @@ function NewCvForm() {
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-5xl">
+        <Link className="inline-flex text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href="/cv-library">← Biblioteka CV</Link>
         <h1 className="mt-5 text-3xl font-semibold sm:mt-12">Dodaj CV</h1>
 
         <form className="mt-8 space-y-6 rounded-2xl border border-[#e5e7e0] bg-white p-6" onSubmit={submit}>
