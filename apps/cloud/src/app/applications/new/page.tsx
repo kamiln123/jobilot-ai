@@ -163,9 +163,12 @@ export default function NewApplicationPage() {
               )}
             </fieldset>
 
-            <button className="rounded-xl bg-[#2d5034] px-5 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60" disabled={saving || jobOffers.length === 0 || cvVersions.length === 0} type="submit">
-              {saving ? "Tworzenie aplikacji..." : "Utwórz aplikację"}
-            </button>
+            <div className="flex flex-col-reverse justify-end gap-3 border-t border-[#edf0e9] pt-6 sm:flex-row">
+              <Link className="rounded-xl px-4 py-3 text-center text-sm font-semibold text-[#546052] hover:bg-[#f0f3ed]" href="/applications">Anuluj</Link>
+              <button className="rounded-xl bg-[#2d5034] px-5 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60" disabled={saving || jobOffers.length === 0 || cvVersions.length === 0} type="submit">
+                {saving ? "Tworzenie aplikacji..." : "Utwórz aplikację"}
+              </button>
+            </div>
           </form>
         ) : null}
       </div>

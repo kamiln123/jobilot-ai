@@ -11,7 +11,7 @@ export default function LocalVaultDownloadPage() {
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#263b2c] text-lg font-bold text-white">J</span>
             <span className="text-lg font-semibold tracking-tight">Jobilot <em className="font-medium text-[#5e7863]">AI</em></span>
           </Link>
-          <Link className="text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href="/login">Cloud Mode</Link>
+          <Link className="text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href="/about">O projekcie</Link>
         </header>
 
         <section className="mt-14 rounded-2xl border border-[#c9d8c6] bg-[#eef4eb] p-7 shadow-sm sm:p-10">
