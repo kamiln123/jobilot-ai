@@ -40,3 +40,12 @@
 | ID | Środowisko | Status | Wynik |
 | --- | --- | --- | --- |
 | CASE-01 | PROD | PASS | Na koncie B zapisano ofertę testową, dokument CV z wersjami v1 i v2 oraz portfolio. Utworzona aplikacja rekrutacyjna poprawnie wiąże ofertę, CV v2 i portfolio. Zmiana statusu na „Wysłana” oraz notatka z datą i godziną pozostają po odświeżeniu; pulpit aktualizuje liczniki. Nie uruchamiano AI dla oferty zawierającej treść pochodzącą z ogłoszenia. |
+
+## 8 sierpnia 2026 — końcowa kontrola wydania MVP
+
+| ID | Środowisko | Status | Wynik |
+| --- | --- | --- | --- |
+| RELEASE-01 | LOCAL / CLOUD | PASS | Cloud Mode przeszedł ESLint, kontrolę TypeScript i produkcyjny build Next.js. |
+| RELEASE-02 | LOCAL / WINDOWS | PASS | Local Vault przeszedł build TypeScript/Vite oraz natywny build Tauri w lokalnym katalogu Cargo poza OneDrive. Powstał instalator NSIS `Jobilot AI Local Vault_0.1.0_x64-setup.exe`; SHA-256: `B73C119E0B59B8B65A0605D4F40B29F30C07E192238120641756031FAA14F378`. |
+| RELEASE-03 | REPOSITORY | PASS | W śledzonych plikach nie znaleziono znanych formatów kluczy OpenAI, Gemini, Supabase ani GitHub. Śledzone są wyłącznie puste szablony `.env.example`; lokalne `.env.local` pozostają ignorowane. |
+| RELEASE-04 | PROD | PASS | Wdrożenie Vercel ma status `Ready`. Strona główna, logowanie, O projekcie, Local Vault, Polityka prywatności i Regulamin zwracają HTTP 200. Publiczny instalator GitHub Release zwraca HTTP 200. README na `main` zawiera plan wersji 1.1, 2.0 i Interview Coach. |
