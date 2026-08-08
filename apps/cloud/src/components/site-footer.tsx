@@ -14,6 +14,8 @@ export function SiteFooter() {
         <nav aria-label="Informacje o projekcie" className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium">
           <Link className="text-[#e3f0df] hover:text-white" href="/about">O projekcie</Link>
           <Link className="text-[#e3f0df] hover:text-white" href="/local-vault">Local Vault</Link>
+          <Link className="text-[#e3f0df] hover:text-white" href="/privacy-policy">Polityka prywatności</Link>
+          <Link className="text-[#e3f0df] hover:text-white" href="/terms">Regulamin</Link>
           <a className="text-[#e3f0df] hover:text-white" href={PRODUCT_GITHUB_URL} rel="noreferrer" target="_blank">
             {PRODUCT_AUTHOR} · GitHub ↗
           </a>
