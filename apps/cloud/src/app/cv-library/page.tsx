@@ -19,6 +19,7 @@ type CvDocument = {
     version_number: number;
     original_file_name: string;
     byte_size: number;
+    storage_path: string;
     created_at: string;
   }[];
 };
@@ -27,6 +28,8 @@ export default function CvLibraryPage() {
   const router = useRouter();
   const [documents, setDocuments] = useState<CvDocument[]>([]);
   const [state, setState] = useState("loading");
+  const [downloadError, setDownloadError] = useState("");
+  const [downloadingVersionId, setDownloadingVersionId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isSupabaseBrowserConfigured()) {
@@ -46,7 +49,7 @@ export default function CvLibraryPage() {
 
       const { data, error } = await supabase
         .from("cv_documents")
-        .select("id, name, description, created_at, cv_versions(id, version_number, original_file_name, byte_size, created_at)")
+        .select("id, name, description, created_at, cv_versions(id, version_number, original_file_name, byte_size, storage_path, created_at)")
         .is("deleted_at", null)
         .order("created_at", { ascending: false });
       if (!active) return;
@@ -61,6 +64,29 @@ export default function CvLibraryPage() {
 
     return () => { active = false; };
   }, [router]);
+
+  async function downloadVersion(version: CvDocument["cv_versions"][number]) {
+    setDownloadError("");
+    setDownloadingVersionId(version.id);
+    try {
+      const { data, error } = await getSupabaseBrowserClient()
+        .storage
+        .from("cv-files")
+        .createSignedUrl(version.storage_path, 60, { download: version.original_file_name });
+      if (error || !data?.signedUrl) throw error;
+
+      const link = document.createElement("a");
+      link.href = data.signedUrl;
+      link.download = version.original_file_name;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch {
+      setDownloadError("Nie udało się przygotować bezpiecznego pobrania CV. Spróbuj ponownie.");
+    } finally {
+      setDownloadingVersionId(null);
+    }
+  }
 
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
@@ -78,6 +104,7 @@ export default function CvLibraryPage() {
 
         {state === "loading" ? <p className="mt-10 text-sm text-[#687167]">Ładowanie CV...</p> : null}
         {state === "error" ? <p className="mt-8 rounded-xl bg-[#fff0ed] p-4 text-sm text-[#a63f2d]">Nie udało się pobrać CV.</p> : null}
+        {downloadError ? <p className="mt-8 rounded-xl bg-[#fff0ed] p-4 text-sm text-[#a63f2d]" role="alert">{downloadError}</p> : null}
         {state === "ready" && documents.length === 0 ? (
           <section className="mt-8 rounded-2xl border border-dashed border-[#cfd7cb] bg-white p-10 text-center">
             <h2 className="font-semibold">Nie masz jeszcze CV w bibliotece.</h2>
@@ -102,7 +129,10 @@ export default function CvLibraryPage() {
                         <p className="text-sm font-medium">v{version.version_number} · {version.original_file_name}</p>
                         <p className="mt-1 text-xs text-[#8b908a]">{formatBytes(version.byte_size)}</p>
                       </div>
-                      <time className="text-xs text-[#8b908a]">{new Intl.DateTimeFormat("pl-PL", { day: "numeric", month: "short", year: "numeric" }).format(new Date(version.created_at))}</time>
+                      <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center">
+                        <time className="text-xs text-[#8b908a]">{new Intl.DateTimeFormat("pl-PL", { day: "numeric", month: "short", year: "numeric" }).format(new Date(version.created_at))}</time>
+                        <button className="rounded-lg border border-[#c9d8c6] bg-[#eef4eb] px-3 py-2 text-xs font-semibold text-[#315b3a] hover:bg-[#dce9dc] disabled:cursor-not-allowed disabled:opacity-60" disabled={downloadingVersionId === version.id} onClick={() => void downloadVersion(version)} type="button">{downloadingVersionId === version.id ? "Przygotowywanie..." : "Pobierz PDF"}</button>
+                      </div>
                     </li>
                   ))}
                 </ul>

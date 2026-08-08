@@ -202,7 +202,8 @@ export default function ApplicationDetailsPage() {
         </header>
         {error ? <p className="mt-6 rounded-xl bg-[#fff0ed] p-3 text-sm text-[#a63f2d]" role="alert">{error}</p> : null}
 
-        <section className="mt-8 rounded-2xl border border-[#e5e7e0] bg-white p-6">
+        <div className="mt-8 grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)] xl:items-stretch">
+        <section className="order-2 rounded-2xl border border-[#e5e7e0] bg-white p-6 xl:order-2">
           <h2 className="text-lg font-semibold">Status i historia</h2>
           <form className="mt-4" onSubmit={updateStatus}>
             <select className="mt-4 w-full rounded-xl border border-[#dfe3da] p-3" onChange={(event) => setSelectedStatus(event.target.value)} value={selectedStatus}>
@@ -218,7 +219,7 @@ export default function ApplicationDetailsPage() {
           </ol>
         </section>
 
-        <section className="mt-5 grid gap-5 lg:grid-cols-2">
+        <section className="order-1 grid gap-5 xl:order-1">
           <article className="rounded-2xl border border-[#e5e7e0] bg-white p-6">
             <h2 className="text-lg font-semibold">Wysłane CV</h2>
             <p className="mt-4 text-sm font-medium">{application.cv_file_name_snapshot}</p>
@@ -234,6 +235,7 @@ export default function ApplicationDetailsPage() {
             </div>
           </article>
         </section>
+        </div>
 
         <section className="mt-5 rounded-2xl border border-[#e5e7e0] bg-white p-6">
           <h2 className="text-lg font-semibold">Oferta pracy</h2>

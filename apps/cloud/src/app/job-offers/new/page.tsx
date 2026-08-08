@@ -129,8 +129,7 @@ export default function NewJobOfferPage() {
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-5xl">
         <div className="mt-5 sm:mt-12">
-          <p className="text-sm font-medium text-[#6c8b70]">Ręczny zapis</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Dodaj ofertę pracy</h1>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Dodaj ofertę pracy</h1>
         </div>
 
         <form className="mt-8 space-y-7 rounded-2xl border border-[#e5e7e0] bg-white p-5 sm:p-8" noValidate onSubmit={handleSubmit}>
