@@ -122,15 +122,14 @@ export default function Home() {
         </div>
 
         <section aria-label="Podsumowanie procesu" className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          <StatCard label="Aktywne aplikacje" note="Wczytane z Twojego konta" value={String(state.applicationCount)} />
-          <StatCard label="Dokumenty CV" note="Aktywne dokumenty w bibliotece" value={String(state.cvCount)} />
-          <StatCard label="Portfolio" note="Aktywne elementy w bibliotece" value={String(state.portfolioCount)} />
+          <StatCard label="Aktywne aplikacje" value={String(state.applicationCount)} />
+          <StatCard label="Dokumenty CV" value={String(state.cvCount)} />
+          <StatCard label="Portfolio" value={String(state.portfolioCount)} />
           <StatCard label="AI" note="Włączane osobno po świadomej zgodzie w wybranej aplikacji na ofertę pracy" value="Opcjonalne" />
         </section>
 
         <section className="mt-8 rounded-2xl border border-[#e5e7e0] bg-white p-6 sm:p-8">
-          <p className="text-sm font-semibold text-[#456a4b]">Następny krok</p>
-          <h2 className="mt-2 text-xl font-semibold tracking-tight">Zarządzaj aplikacjami</h2>
+          <h2 className="text-xl font-semibold tracking-tight">Zarządzaj aplikacjami</h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6c716b]">
             Połącz własną ofertę, konkretną wersję CV i wybrane portfolio w jedną aplikację rekrutacyjną. Decyzja o aplikowaniu zawsze pozostaje po Twojej stronie.
           </p>
@@ -141,12 +140,12 @@ export default function Home() {
   );
 }
 
-function StatCard({ label, value, note }: { label: string; value: string; note: string }) {
+function StatCard({ label, value, note }: { label: string; value: string; note?: string }) {
   return (
     <article className="rounded-2xl border border-[#e5e7e0] bg-white p-5">
       <p className="text-sm font-medium text-[#737a70]">{label}</p>
       <p className="mt-5 text-3xl font-semibold tracking-tight">{value}</p>
-      <p className="mt-2 text-xs text-[#8b908a]">{note}</p>
+      {note ? <p className="mt-2 text-xs text-[#8b908a]">{note}</p> : null}
     </article>
   );
 }

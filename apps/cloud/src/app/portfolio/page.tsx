@@ -106,11 +106,15 @@ export default function PortfolioPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f7f4] p-7 text-[#20241f]">
+    <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-5xl">
-        <h1 className="mt-5 text-3xl font-semibold sm:mt-12">Portfolio</h1>
+        <section className="mt-5 sm:mt-12">
+          <p className="text-sm font-medium text-[#6c8b70]">Cloud Mode</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Portfolio</h1>
+          <p className="mt-2 text-sm text-[#687167]">Zapisuj linki i materiały, które chcesz przypisać do aplikacji rekrutacyjnej.</p>
+        </section>
 
-        <form className="mt-6 grid gap-4 rounded-2xl border bg-white p-5 sm:grid-cols-2" onSubmit={submit}>
+        <form className="mt-8 grid gap-4 rounded-2xl border bg-white p-5 sm:grid-cols-2" onSubmit={submit}>
           {error ? <p className="sm:col-span-2 text-sm text-red-700">{error}</p> : null}
           <input className="rounded-xl border p-3" onChange={(event) => setTitle(event.target.value)} placeholder="Tytuł *" value={title} />
           <select className="rounded-xl border p-3" onChange={(event) => setType(event.target.value)} value={type}>
