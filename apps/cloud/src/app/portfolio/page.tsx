@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -107,27 +106,24 @@ export default function PortfolioPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f7f4] p-7 text-[#20241f]">
-      <div className="mx-auto max-w-4xl">
-        <header className="flex items-center justify-between gap-4">
-          <Link className="flex items-center gap-3" href="/">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#263b2c] text-lg font-bold text-white">J</span>
-            <span className="text-lg font-semibold tracking-tight">Jobilot <em className="font-medium text-[#5e7863]">AI</em></span>
-          </Link>
-          <Link className="text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href="/">Pulpit</Link>
-        </header>
-        <h1 className="mt-8 text-3xl font-semibold">Portfolio</h1>
+    <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
+      <div className="mx-auto max-w-5xl">
+        <section className="mt-5 sm:mt-12">
+          <p className="text-sm font-medium text-[#6c8b70]">Cloud Mode</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Portfolio</h1>
+          <p className="mt-2 text-sm text-[#687167]">Zapisuj linki i materiały, które chcesz przypisać do aplikacji rekrutacyjnej.</p>
+        </section>
 
-        <form className="mt-6 grid gap-4 rounded-2xl border bg-white p-5 sm:grid-cols-2" onSubmit={submit}>
+        <form className="mt-8 grid gap-4 rounded-2xl border border-[#e5e7e0] bg-white p-5 sm:grid-cols-2" onSubmit={submit}>
           {error ? <p className="sm:col-span-2 text-sm text-red-700">{error}</p> : null}
-          <input className="rounded-xl border p-3" onChange={(event) => setTitle(event.target.value)} placeholder="Tytuł *" value={title} />
-          <select className="rounded-xl border p-3" onChange={(event) => setType(event.target.value)} value={type}>
+          <input className="rounded-xl border border-[#dfe3da] p-3" onChange={(event) => setTitle(event.target.value)} placeholder="Tytuł *" value={title} />
+          <select className="rounded-xl border border-[#dfe3da] p-3" onChange={(event) => setType(event.target.value)} value={type}>
             <option value="link">Link</option>
             <option value="case_study">Case study</option>
             <option value="presentation">Prezentacja</option>
           </select>
-          <input className="rounded-xl border p-3 sm:col-span-2" onChange={(event) => setUrl(event.target.value)} placeholder="https://... *" value={url} />
-          <textarea className="rounded-xl border p-3 sm:col-span-2" onChange={(event) => setDescription(event.target.value)} placeholder="Opis (opcjonalnie)" value={description} />
+          <input className="rounded-xl border border-[#dfe3da] p-3 sm:col-span-2" onChange={(event) => setUrl(event.target.value)} placeholder="https://... *" value={url} />
+          <textarea className="rounded-xl border border-[#dfe3da] p-3 sm:col-span-2" onChange={(event) => setDescription(event.target.value)} placeholder="Opis (opcjonalnie)" value={description} />
           <button className="rounded-xl bg-[#2d5034] p-3 font-semibold text-white sm:col-span-2">Zapisz element portfolio</button>
         </form>
 
@@ -135,7 +131,7 @@ export default function PortfolioPage() {
           {items.map((item) => {
             const itemUrl = safeHttpUrl(item.url);
             return (
-              <article className="rounded-2xl border bg-white p-5" key={item.id}>
+              <article className="rounded-2xl border border-[#e5e7e0] bg-white p-5" key={item.id}>
                 <p className="font-semibold">{item.title}</p>
                 {itemUrl ? (
                   <a className="mt-2 inline-block max-w-full break-all text-sm text-[#456a4b]" href={itemUrl} rel="noreferrer" target="_blank">

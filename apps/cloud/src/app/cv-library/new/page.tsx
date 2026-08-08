@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -155,12 +154,9 @@ function NewCvForm() {
   const selectedDocument = documents.find((document) => document.id === documentId);
 
   return (
-    <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8">
-      <div className="mx-auto max-w-2xl">
-        <Link className="text-sm font-semibold text-[#456a4b]" href="/cv-library">
-          ← Biblioteka CV
-        </Link>
-        <h1 className="mt-10 text-3xl font-semibold">Dodaj CV</h1>
+    <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
+      <div className="mx-auto max-w-5xl">
+        <h1 className="mt-5 text-3xl font-semibold sm:mt-12">Dodaj CV</h1>
 
         <form className="mt-8 space-y-6 rounded-2xl border border-[#e5e7e0] bg-white p-6" onSubmit={submit}>
           {error ? <p className="rounded-xl bg-[#fff0ed] p-3 text-sm text-[#a63f2d]">{error}</p> : null}

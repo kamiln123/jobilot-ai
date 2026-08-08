@@ -85,19 +85,13 @@ export default function ApplicationsPage() {
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-5xl">
-        <header className="flex items-center justify-between gap-4">
-          <Link className="flex items-center gap-3" href="/">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#263b2c] text-lg font-bold text-white">J</span>
-            <span className="text-lg font-semibold">Jobilot AI</span>
-          </Link>
-          <Link className="text-sm font-semibold text-[#456a4b]" href="/">← Pulpit</Link>
-        </header>
-
-        <section className="mt-12">
-          <p className="text-sm font-medium text-[#6c8b70]">Cloud Mode</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight">Aplikacje</h1>
-          <p className="mt-2 text-sm text-[#687167]">Każda pozycja łączy ofertę, konkretny snapshot CV i wybrane portfolio.</p>
-          <Link className="mt-6 inline-flex min-h-12 items-center rounded-xl bg-[#2d5034] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#203d27]" href="/applications/new">
+        <section className="mt-5 flex flex-col justify-between gap-5 sm:mt-12 sm:flex-row sm:items-end">
+          <div>
+            <p className="text-sm font-medium text-[#6c8b70]">Cloud Mode</p>
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Aplikacje</h1>
+            <p className="mt-2 text-sm text-[#687167]">Każda pozycja łączy ofertę, konkretną wersję CV i wybrane portfolio.</p>
+          </div>
+          <Link className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#2d5034] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#203d27]" href="/applications/new">
             + Utwórz aplikację
           </Link>
         </section>

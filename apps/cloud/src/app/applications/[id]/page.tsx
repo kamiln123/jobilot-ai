@@ -179,10 +179,8 @@ export default function ApplicationDetailsPage() {
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-5xl">
-        <Link className="text-sm font-semibold text-[#456a4b]" href="/applications">← Aplikacje</Link>
-        <header className="mt-10 flex flex-wrap items-start justify-between gap-4">
+        <header className="mt-5 flex flex-wrap items-start justify-between gap-4 sm:mt-12">
           <div>
-            <p className="text-sm font-medium text-[#6c8b70]">Application</p>
             <h1 className="mt-2 text-3xl font-semibold tracking-tight">{jobOffer?.company_name ?? "Oferta niedostępna"}</h1>
             <p className="mt-2 text-lg text-[#687167]">{jobOffer?.position_title ?? "Stanowisko niedostępne"}</p>
           </div>
