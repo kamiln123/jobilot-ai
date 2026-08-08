@@ -68,7 +68,7 @@ export default function CvLibraryPage() {
         <header className="flex items-center justify-between gap-4">
           <Link className="flex items-center gap-3" href="/">
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#263b2c] text-lg font-bold text-white">J</span>
-            <span className="text-lg font-semibold">Jobilot AI</span>
+            <span className="text-lg font-semibold tracking-tight">Jobilot <em className="font-medium text-[#5e7863]">AI</em></span>
           </Link>
           <Link className="text-sm font-semibold text-[#456a4b]" href="/">← Pulpit</Link>
         </header>

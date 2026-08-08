@@ -108,7 +108,7 @@ export default function PortfolioPage() {
 
   return (
     <main className="min-h-screen bg-[#f7f7f4] p-7 text-[#20241f]">
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-5xl">
         <header className="flex items-center justify-between gap-4">
           <Link className="flex items-center gap-3" href="/">
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#263b2c] text-lg font-bold text-white">J</span>
