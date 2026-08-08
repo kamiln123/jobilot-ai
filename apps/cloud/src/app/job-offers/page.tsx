@@ -62,12 +62,7 @@ export default function JobOffersPage() {
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-5xl">
-        <header className="flex items-center justify-between gap-4">
-          <Link className="flex items-center gap-3" href="/"><span className="grid h-9 w-9 place-items-center rounded-xl bg-[#263b2c] text-lg font-bold text-white">J</span><span className="text-lg font-semibold tracking-tight">Jobilot <em className="font-medium text-[#5e7863]">AI</em></span></Link>
-          <Link className="text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href="/">← Pulpit</Link>
-        </header>
-
-        <div className="mt-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div className="mt-5 flex flex-col justify-between gap-5 sm:mt-12 sm:flex-row sm:items-end">
           <div><p className="text-sm font-medium text-[#6c8b70]">Cloud Mode</p><h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Oferty pracy</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-[#6c716b]">Zapisuj ręcznie oferty znalezione na dowolnym portalu. Nie pobieramy ich automatycznie.</p></div>
           <Link className="inline-flex items-center justify-center rounded-xl bg-[#2d5034] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#203d27]" href="/job-offers/new">+ Dodaj ofertę</Link>
         </div>

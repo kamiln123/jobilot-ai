@@ -128,15 +128,7 @@ export default function NewJobOfferPage() {
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-3xl">
-        <header className="flex items-center justify-between gap-4">
-          <Link className="flex items-center gap-3" href="/job-offers">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#263b2c] text-lg font-bold text-white">J</span>
-            <span className="text-lg font-semibold tracking-tight">Jobilot <em className="font-medium text-[#5e7863]">AI</em></span>
-          </Link>
-          <Link className="text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href="/job-offers">← Oferty pracy</Link>
-        </header>
-
-        <div className="mt-12">
+        <div className="mt-5 sm:mt-12">
           <p className="text-sm font-medium text-[#6c8b70]">Ręczny zapis</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Dodaj ofertę pracy</h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6c716b]">Pola oznaczone gwiazdką są wymagane. Oferta nie utworzy Application automatycznie.</p>

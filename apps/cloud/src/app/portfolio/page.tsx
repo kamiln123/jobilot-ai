@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -109,14 +108,7 @@ export default function PortfolioPage() {
   return (
     <main className="min-h-screen bg-[#f7f7f4] p-7 text-[#20241f]">
       <div className="mx-auto max-w-5xl">
-        <header className="flex items-center justify-between gap-4">
-          <Link className="flex items-center gap-3" href="/">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#263b2c] text-lg font-bold text-white">J</span>
-            <span className="text-lg font-semibold tracking-tight">Jobilot <em className="font-medium text-[#5e7863]">AI</em></span>
-          </Link>
-          <Link className="text-sm font-semibold text-[#456a4b] hover:text-[#294b30]" href="/">Pulpit</Link>
-        </header>
-        <h1 className="mt-8 text-3xl font-semibold">Portfolio</h1>
+        <h1 className="mt-5 text-3xl font-semibold sm:mt-12">Portfolio</h1>
 
         <form className="mt-6 grid gap-4 rounded-2xl border bg-white p-5 sm:grid-cols-2" onSubmit={submit}>
           {error ? <p className="sm:col-span-2 text-sm text-red-700">{error}</p> : null}

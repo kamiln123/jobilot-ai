@@ -65,23 +65,15 @@ export default function CvLibraryPage() {
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-7 text-[#20241f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-5xl">
-        <header className="flex items-center justify-between gap-4">
-          <Link className="flex items-center gap-3" href="/">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#263b2c] text-lg font-bold text-white">J</span>
-            <span className="text-lg font-semibold tracking-tight">Jobilot <em className="font-medium text-[#5e7863]">AI</em></span>
-          </Link>
-          <Link className="text-sm font-semibold text-[#456a4b]" href="/">← Pulpit</Link>
-        </header>
-
-        <div className="mt-12">
+        <div className="mt-5 flex flex-col justify-between gap-5 sm:mt-12 sm:flex-row sm:items-end">
           <div>
             <p className="text-sm font-medium text-[#6c8b70]">Cloud Mode</p>
             <h1 className="mt-2 text-3xl font-semibold tracking-tight">Biblioteka CV</h1>
             <p className="mt-2 text-sm text-[#687167]">Każda nowa wersja pozostaje oddzielnym dokumentem.</p>
-            <Link className="mt-6 inline-flex min-h-12 items-center rounded-xl bg-[#2d5034] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#203d27]" href="/cv-library/new">
-              + Dodaj CV
-            </Link>
           </div>
+          <Link className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#2d5034] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#203d27]" href="/cv-library/new">
+            + Dodaj CV
+          </Link>
         </div>
 
         {state === "loading" ? <p className="mt-10 text-sm text-[#687167]">Ładowanie CV...</p> : null}

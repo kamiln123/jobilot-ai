@@ -12,7 +12,7 @@ import {
 type DashboardState =
   | { kind: "loading" }
   | { kind: "configuration-error" }
-  | { kind: "ready"; email: string; applicationCount: number; cvCount: number };
+  | { kind: "ready"; email: string; applicationCount: number; cvCount: number; portfolioCount: number };
 
 export default function Home() {
   const router = useRouter();
@@ -36,7 +36,7 @@ export default function Home() {
         return;
       }
 
-      const [applicationsResult, cvResult] = await Promise.all([
+      const [applicationsResult, cvResult, portfolioResult] = await Promise.all([
         supabase
           .from("applications")
           .select("id", { count: "exact", head: true })
@@ -45,6 +45,10 @@ export default function Home() {
           .from("cv_documents")
           .select("id", { count: "exact", head: true })
           .is("deleted_at", null),
+        supabase
+          .from("portfolio_artifacts")
+          .select("id", { count: "exact", head: true })
+          .is("archived_at", null),
       ]);
 
       if (!active) return;
@@ -54,6 +58,7 @@ export default function Home() {
         email: session.user.email ?? "Użytkowniku",
         applicationCount: applicationsResult.count ?? 0,
         cvCount: cvResult.count ?? 0,
+        portfolioCount: portfolioResult.count ?? 0,
       });
     }
 
@@ -102,13 +107,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#f7f7f4] px-5 py-5 text-[#20241f] sm:px-8 sm:py-7 lg:px-12">
-      <section className="mx-auto max-w-6xl">
+      <section className="mx-auto max-w-5xl">
         <header className="flex items-center justify-between gap-4">
-          <Link className="flex items-center gap-2 lg:hidden" href="/">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-[#263b2c] text-sm font-bold text-white">J</span>
-            <span className="font-semibold">Jobilot AI</span>
-          </Link>
-          <p className="hidden flex-1 text-sm text-[#6c716b] sm:block">Twoje prywatne centrum procesu rekrutacyjnego.</p>
+          <p className="flex-1 text-sm text-[#6c716b]">Twoje prywatne centrum procesu rekrutacyjnego.</p>
           <button className="rounded-xl border border-[#e4e6de] bg-white px-3 py-2 text-sm font-medium text-[#3d463d] hover:bg-[#f1f4ee]" onClick={handleSignOut} type="button">
             Wyloguj się
           </button>
@@ -123,7 +124,8 @@ export default function Home() {
         <section aria-label="Podsumowanie procesu" className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           <StatCard label="Aktywne aplikacje" note="Wczytane z Twojego konta" value={String(state.applicationCount)} />
           <StatCard label="Dokumenty CV" note="Aktywne dokumenty w bibliotece" value={String(state.cvCount)} />
-          <StatCard label="AI" note="Włączane osobno po świadomej zgodzie w wybranej aplikacji" value="Opcjonalne" />
+          <StatCard label="Portfolio" note="Aktywne elementy w bibliotece" value={String(state.portfolioCount)} />
+          <StatCard label="AI" note="Włączane osobno po świadomej zgodzie w wybranej aplikacji na ofertę pracy" value="Opcjonalne" />
         </section>
 
         <section className="mt-8 rounded-2xl border border-[#e5e7e0] bg-white p-6 sm:p-8">
